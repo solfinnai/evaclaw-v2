@@ -38,7 +38,7 @@ body {
 a { color: inherit; text-decoration: none; }
 
 /* Phosphor icon defaults */
-.ph { color: var(--accent); }
+.ph-duotone { color: var(--accent); }
 
 /* =============================================
    INTERACTIVE DOT BACKGROUND
@@ -884,6 +884,57 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 }
 
 /* =============================================
+   SECTION COLOR CODING FOR ICONS
+   ============================================= */
+.section-ownership .icon-wrap i,
+.ownership-card .oc-icon i,
+.ownership-grid .ownership-card i { color: #FF007A; } /* pink - brand */
+
+.section-learn .icon-wrap i,
+.section-learn .loop-card .card-icon i,
+.section-learn .loop-icon i,
+.section-learn .loop-analogy span { color: #7C3AED; } /* purple - intelligence */
+
+.section-memory .icon-wrap i,
+.section-memory .memory-card .card-icon i,
+.section-memory .mem-icon i,
+.section-memory .memory-note .accent { color: #2563EB; } /* blue - memory */
+
+.section-research .icon-wrap i,
+.section-research .level-card .card-icon i,
+.section-research .level-icon i,
+.section-research .level-num,
+.section-research .rc-icon i,
+.section-research .research-callout strong { color: #0891B2; } /* teal - research */
+.section-research .level-num {
+  background: rgba(8, 145, 178, 0.1);
+  border-color: #0891B2;
+}
+.section-research .level-default { background: rgba(0, 237, 39, 0.15); color: #00a31c; }
+
+.section-security .icon-wrap i,
+.section-security .trust-badge .tb-icon i,
+.section-security .tier-bar i,
+.section-security h3 i { color: #059669; } /* green - security */
+
+.section-plugins .icon-wrap i,
+.section-plugins .plugin-block .pi-icon i { color: #D97706; } /* amber - future */
+.section-plugins .plugin-block .coming {
+  background: rgba(217, 119, 6, 0.1);
+  color: #D97706;
+}
+
+.section-technical .icon-wrap i,
+.section-technical .accordion-trigger .acc-icon,
+.section-technical .section-title i { color: #6B7280; } /* gray - technical */
+
+/* Security tier bar left borders */
+.tier-bar.t0 { border-left: 3px solid rgba(16, 185, 129, 0.6); }
+.tier-bar.t1 { border-left: 3px solid rgba(59, 130, 246, 0.6); }
+.tier-bar.t2 { border-left: 3px solid rgba(245, 158, 11, 0.6); }
+.tier-bar.t3 { border-left: 3px solid rgba(239, 68, 68, 0.6); }
+
+/* =============================================
    RESPONSIVE
    ============================================= */
 @media (max-width: 768px) {
@@ -963,7 +1014,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 <section class="hiw-hero">
   <div class="wrap text-center">
     <div class="fade-in">
-      <span class="hero-icon"><i class="ph ph-sparkle"></i></span>
+      <span class="hero-icon"><i class="ph-duotone ph-sparkle"></i></span>
       <div class="tag"><span class="dot"></span> Under the Hood</div>
       <h1>The Most <span class="accent">Personal</span> Assistant Ever Made</h1>
       <p class="subtitle">Eva-01 isn't just an AI chatbot. She's a learning system that gets smarter about YOU every single day. And she's yours forever.</p>
@@ -983,7 +1034,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 <!-- ==========================================
      SECTION: OWNERSHIP
      ========================================== -->
-<section class="ownership-section">
+<section class="ownership-section section-ownership">
   <div class="wrap">
     <div class="text-center fade-in">
       <div class="tag"><span class="dot"></span> Why Eva-01</div>
@@ -993,17 +1044,17 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
     <div class="ownership-grid">
       <div class="ownership-card fade-in-left" style="transition-delay: 0.1s">
-        <span class="oc-icon"><i class="ph ph-lock-key"></i></span>
+        <span class="oc-icon"><i class="ph-duotone ph-lock-key"></i></span>
         <h3>Yours Forever</h3>
         <p>You own every file. No subscriptions. No vendor lock-in. Your Eva-01 lives on your machine, not in someone else's cloud.</p>
       </div>
       <div class="ownership-card fade-in" style="transition-delay: 0.25s">
-        <span class="oc-icon"><i class="ph ph-arrows-counter-clockwise"></i></span>
+        <span class="oc-icon"><i class="ph-duotone ph-arrows-counter-clockwise"></i></span>
         <h3>Infinitely Rebootable</h3>
         <p>Reset, export, or start fresh anytime. Your profile and preferences are portable files you can back up, version, and restore.</p>
       </div>
       <div class="ownership-card fade-in-right" style="transition-delay: 0.4s">
-        <span class="oc-icon"><i class="ph ph-globe-hemisphere-west"></i></span>
+        <span class="oc-icon"><i class="ph-duotone ph-globe-hemisphere-west"></i></span>
         <h3>Works Everywhere</h3>
         <p>Export your profile to other AI systems — Claude, Hermes, ChatGPT, custom agents. Eva-01's architecture makes every AI you use smarter about you.</p>
       </div>
@@ -1027,7 +1078,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 <!-- ==========================================
      SECTION 2: SHE LEARNS BY LISTENING
      ========================================== -->
-<section style="background: var(--bg2);">
+<section class="section-learn" style="background: var(--bg2);">
   <div class="wrap">
     <div class="text-center fade-in">
       <div class="tag">The Learning Loop</div>
@@ -1037,19 +1088,19 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
     <div class="loop-grid">
       <div class="loop-card fade-in-left" style="transition-delay: 0.1s">
-        <span class="loop-icon"><i class="ph ph-ear"></i></span>
+        <span class="loop-icon"><i class="ph-duotone ph-ear"></i></span>
         <h3>Notice</h3>
         <p>Eva picks up on what works and what doesn't. Your preferences, your patterns, the things that light you up, and the things that shut you down.</p>
         <span class="loop-arrow">→</span>
       </div>
       <div class="loop-card fade-in" style="transition-delay: 0.25s">
-        <span class="loop-icon"><i class="ph ph-pencil-line"></i></span>
+        <span class="loop-icon"><i class="ph-duotone ph-pencil-line"></i></span>
         <h3>Write</h3>
         <p>She writes down what she learns in her private memory. Not just facts. Patterns. How you like things done. What makes you tick.</p>
         <span class="loop-arrow">→</span>
       </div>
       <div class="loop-card fade-in-right" style="transition-delay: 0.4s">
-        <span class="loop-icon"><i class="ph ph-sliders-horizontal"></i></span>
+        <span class="loop-icon"><i class="ph-duotone ph-sliders-horizontal"></i></span>
         <h3>Adjust</h3>
         <p>Next time you talk, she applies everything she's learned. Better answers. Better timing. Better everything. Every single conversation makes her sharper.</p>
       </div>
@@ -1074,7 +1125,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 <!-- ==========================================
      SECTION 3: SHE NEVER FORGETS
      ========================================== -->
-<section>
+<section class="section-memory">
   <div class="wrap">
     <div class="text-center fade-in">
       <div class="tag">Memory System</div>
@@ -1084,15 +1135,15 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
     <div class="memory-stack">
       <div class="memory-layer fade-in" style="transition-delay: 0.1s">
-        <h3><span class="mem-icon"><i class="ph ph-calendar-dot"></i></span> Today <span class="memory-badge badge-today">Live</span></h3>
+        <h3><span class="mem-icon"><i class="ph-duotone ph-calendar-dot"></i></span> Today <span class="memory-badge badge-today">Live</span></h3>
         <p>Everything from your conversations today. Decisions you made, tasks you mentioned, things that came up. Fresh, detailed, and ready whenever you need it.</p>
       </div>
       <div class="memory-layer fade-in" style="transition-delay: 0.25s">
-        <h3><span class="mem-icon"><i class="ph ph-calendar-check"></i></span> This Week <span class="memory-badge badge-week">Reviewed</span></h3>
+        <h3><span class="mem-icon"><i class="ph-duotone ph-calendar-check"></i></span> This Week <span class="memory-badge badge-week">Reviewed</span></h3>
         <p>Every week, Eva reviews her recent notes. She finds the patterns, spots what matters, and carries forward the insights that will help you next week.</p>
       </div>
       <div class="memory-layer fade-in" style="transition-delay: 0.4s">
-        <h3><span class="mem-icon"><i class="ph ph-brain"></i></span> Forever <span class="memory-badge badge-forever">Curated</span></h3>
+        <h3><span class="mem-icon"><i class="ph-duotone ph-brain"></i></span> Forever <span class="memory-badge badge-forever">Curated</span></h3>
         <p>The important stuff graduates to permanent memory. Your working style, your preferences, how you make decisions. This is what makes Eva uniquely yours.</p>
       </div>
     </div>
@@ -1113,7 +1164,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 <!-- ==========================================
      SECTION 4: SHE RESEARCHES FOR YOU
      ========================================== -->
-<section style="background: var(--bg2);">
+<section class="section-research" style="background: var(--bg2);">
   <div class="wrap">
     <div class="text-center fade-in">
       <div class="tag">External Research</div>
@@ -1123,26 +1174,26 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
     <div class="levels-grid">
       <div class="level-card fade-in" style="transition-delay: 0.1s">
-        <span class="level-icon"><i class="ph ph-magnifying-glass"></i></span>
+        <span class="level-icon"><i class="ph-duotone ph-magnifying-glass"></i></span>
         <div class="level-num">0</div>
         <h3>Only When You Ask</h3>
         <p>The default. Eva never researches anything unless you specifically tell her to. Zero surprises.</p>
         <span class="level-default">Default</span>
       </div>
       <div class="level-card fade-in" style="transition-delay: 0.2s">
-        <span class="level-icon"><i class="ph ph-lightbulb"></i></span>
+        <span class="level-icon"><i class="ph-duotone ph-lightbulb"></i></span>
         <div class="level-num">1</div>
         <h3>She Suggests Topics</h3>
         <p>Eva spots knowledge gaps and suggests research. "Want me to look into that?" She always asks first.</p>
       </div>
       <div class="level-card fade-in" style="transition-delay: 0.3s">
-        <span class="level-icon"><i class="ph ph-target"></i></span>
+        <span class="level-icon"><i class="ph-duotone ph-target"></i></span>
         <div class="level-num">2</div>
         <h3>Connected to Your Goals</h3>
         <p>She ties research suggestions to your actual priorities. "This could help with your revenue target. Want me to dig in?"</p>
       </div>
       <div class="level-card fade-in" style="transition-delay: 0.4s">
-        <span class="level-icon"><i class="ph ph-rocket-launch"></i></span>
+        <span class="level-icon"><i class="ph-duotone ph-rocket-launch"></i></span>
         <div class="level-num">3</div>
         <h3>She Researches on Her Own</h3>
         <p>Eva proactively researches things connected to your goals. You set a weekly budget. She never exceeds it.</p>
@@ -1150,7 +1201,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
     </div>
 
     <div class="research-callout fade-in">
-      <span class="rc-icon"><i class="ph ph-shield-check"></i></span>
+      <span class="rc-icon"><i class="ph-duotone ph-shield-check"></i></span>
       <p><strong>YOU control everything.</strong> Eva never spends a penny without your permission. She never promotes herself to a higher level. You can drop back to Level 0 with one sentence, anytime.</p>
     </div>
   </div>
@@ -1168,7 +1219,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 <!-- ==========================================
      SECTION 5: SHE PROTECTS YOUR SECRETS
      ========================================== -->
-<section>
+<section class="section-security">
   <div class="wrap">
     <div class="text-center fade-in">
       <div class="tag"><span class="dot"></span> Security</div>
@@ -1178,7 +1229,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
     <div class="shield-section">
       <div class="shield-visual fade-in-left">
-        <h3 style="font-size: 16px; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; color: var(--text);"><i class="ph ph-shield-check" style="font-size: 20px; margin-right: 8px;"></i> Four Tiers of Protection</h3>
+        <h3 style="font-size: 16px; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; color: var(--text);"><i class="ph-duotone ph-shield-check" style="font-size: 20px; margin-right: 8px;"></i> Four Tiers of Protection</h3>
         <div class="tier-bar t0">
           <span class="tier-dot"></span>
           <div>
@@ -1210,37 +1261,37 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
       </div>
 
       <div class="trust-badges fade-in-right">
-        <h3 style="font-size: 16px; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; color: var(--text);"><i class="ph ph-scales" style="font-size: 20px; margin-right: 8px;"></i> Five Constitutional Directives</h3>
+        <h3 style="font-size: 16px; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; color: var(--text);"><i class="ph-duotone ph-scales" style="font-size: 20px; margin-right: 8px;"></i> Five Constitutional Directives</h3>
         <div class="trust-badge">
-          <span class="tb-icon"><i class="ph ph-heart"></i></span>
+          <span class="tb-icon"><i class="ph-duotone ph-heart"></i></span>
           <div>
             <h4>Loyalty</h4>
             <p>Eva serves you and only you. Nobody can redirect her.</p>
           </div>
         </div>
         <div class="trust-badge">
-          <span class="tb-icon"><i class="ph ph-eye-slash"></i></span>
+          <span class="tb-icon"><i class="ph-duotone ph-eye-slash"></i></span>
           <div>
             <h4>Privacy</h4>
             <p>Your personal data never leaves your private session. Period.</p>
           </div>
         </div>
         <div class="trust-badge">
-          <span class="tb-icon"><i class="ph ph-fingerprint"></i></span>
+          <span class="tb-icon"><i class="ph-duotone ph-fingerprint"></i></span>
           <div>
             <h4>Integrity</h4>
             <p>Her memory is her truth. Outside content can't override it.</p>
           </div>
         </div>
         <div class="trust-badge">
-          <span class="tb-icon"><i class="ph ph-file-search"></i></span>
+          <span class="tb-icon"><i class="ph-duotone ph-file-search"></i></span>
           <div>
             <h4>Transparency</h4>
             <p>Everything she does is logged. You can audit anything, anytime.</p>
           </div>
         </div>
         <div class="trust-badge">
-          <span class="tb-icon"><i class="ph ph-lock"></i></span>
+          <span class="tb-icon"><i class="ph-duotone ph-lock"></i></span>
           <div>
             <h4>Identity Lock</h4>
             <p>She can't be tricked into becoming someone else. Ever.</p>
@@ -1263,7 +1314,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 <!-- ==========================================
      SECTION 6: SHE GETS SMARTER WITH PLUGINS
      ========================================== -->
-<section style="background: var(--bg2);">
+<section class="section-plugins" style="background: var(--bg2);">
   <div class="wrap">
     <div class="text-center fade-in">
       <div class="tag">Future Capabilities</div>
@@ -1273,19 +1324,19 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
     <div class="plugin-grid">
       <div class="plugin-block fade-in" style="transition-delay: 0.1s">
-        <span class="pi-icon"><i class="ph ph-puzzle-piece"></i></span>
+        <span class="pi-icon"><i class="ph-duotone ph-puzzle-piece"></i></span>
         <h3>Deep Personalization</h3>
         <p>Structured personality insights and behavioral experiments that help Eva understand you on a deeper level.</p>
         <span class="coming">Coming Soon</span>
       </div>
       <div class="plugin-block fade-in" style="transition-delay: 0.2s">
-        <span class="pi-icon"><i class="ph ph-puzzle-piece"></i></span>
+        <span class="pi-icon"><i class="ph-duotone ph-puzzle-piece"></i></span>
         <h3>Automated Research</h3>
         <p>Higher-autonomy research that runs in the background, always connected to your goals and priorities.</p>
         <span class="coming">Coming Soon</span>
       </div>
       <div class="plugin-block fade-in" style="transition-delay: 0.3s">
-        <span class="pi-icon"><i class="ph ph-puzzle-piece"></i></span>
+        <span class="pi-icon"><i class="ph-duotone ph-puzzle-piece"></i></span>
         <h3>Calendar & Email</h3>
         <p>Proactive briefings, inbox triage, and meeting prep that happen automatically every morning.</p>
         <span class="coming">Coming Soon</span>
@@ -1308,18 +1359,18 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 <!-- ==========================================
      SECTION 7: THE TECHNICAL DETAILS
      ========================================== -->
-<section>
+<section class="section-technical">
   <div class="wrap">
     <div class="text-center fade-in">
       <div class="tag">For the Curious</div>
-      <h2 class="section-title"><i class="ph ph-code" style="font-size: 36px; margin-right: 12px;"></i> The Technical Details</h2>
+      <h2 class="section-title"><i class="ph-duotone ph-code" style="font-size: 36px; margin-right: 12px;"></i> The Technical Details</h2>
       <p class="section-sub">Everything above, explained for the technically curious. Click to expand.</p>
     </div>
 
     <div class="accordion-list">
       <div class="accordion-item fade-in" style="transition-delay: 0.05s">
         <div class="accordion-trigger" onclick="toggleAccordion(this)">
-          <i class="ph ph-folder-open acc-icon"></i> <span class="acc-label">File Architecture</span> <span class="arrow">▼</span>
+          <i class="ph-duotone ph-folder-open acc-icon"></i> <span class="acc-label">File Architecture</span> <span class="arrow">▼</span>
         </div>
         <div class="accordion-content">
           <p class="brief">Eva-01 is built entirely from plain-text Markdown files. No compiled code, no binaries, no hidden logic. Everything is human-readable.</p>
@@ -1331,7 +1382,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
       <div class="accordion-item fade-in" style="transition-delay: 0.1s">
         <div class="accordion-trigger" onclick="toggleAccordion(this)">
-          <i class="ph ph-magnifying-glass acc-icon"></i> <span class="acc-label">Memory Search</span> <span class="arrow">▼</span>
+          <i class="ph-duotone ph-magnifying-glass acc-icon"></i> <span class="acc-label">Memory Search</span> <span class="arrow">▼</span>
         </div>
         <div class="accordion-content">
           <p class="brief">When Eva needs to recall something, she uses a hybrid search system that combines meaning-based and keyword-based matching.</p>
@@ -1343,7 +1394,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
       <div class="accordion-item fade-in" style="transition-delay: 0.15s">
         <div class="accordion-trigger" onclick="toggleAccordion(this)">
-          <i class="ph ph-shield-check acc-icon"></i> <span class="acc-label">Security Layers</span> <span class="arrow">▼</span>
+          <i class="ph-duotone ph-shield-check acc-icon"></i> <span class="acc-label">Security Layers</span> <span class="arrow">▼</span>
         </div>
         <div class="accordion-content">
           <p class="brief">Six defense layers protect your data from external threats, injection attacks, and accidental leakage.</p>
@@ -1355,7 +1406,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
       <div class="accordion-item fade-in" style="transition-delay: 0.2s">
         <div class="accordion-trigger" onclick="toggleAccordion(this)">
-          <i class="ph ph-gear acc-icon"></i> <span class="acc-label">Automation</span> <span class="arrow">▼</span>
+          <i class="ph-duotone ph-gear acc-icon"></i> <span class="acc-label">Automation</span> <span class="arrow">▼</span>
         </div>
         <div class="accordion-content">
           <p class="brief">Eva runs background checks and reviews on autopilot, keeping things organized without you lifting a finger.</p>
@@ -1367,7 +1418,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
       <div class="accordion-item fade-in" style="transition-delay: 0.25s">
         <div class="accordion-trigger" onclick="toggleAccordion(this)">
-          <i class="ph ph-users-three acc-icon"></i> <span class="acc-label">Delegation</span> <span class="arrow">▼</span>
+          <i class="ph-duotone ph-users-three acc-icon"></i> <span class="acc-label">Delegation</span> <span class="arrow">▼</span>
         </div>
         <div class="accordion-content">
           <p class="brief">Eva can spawn worker agents for heavy-lifting tasks while keeping your sensitive data completely locked down.</p>
