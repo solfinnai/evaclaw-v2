@@ -6,6 +6,7 @@
 <title>How The Magic Works — Eva-01 | Eva Online</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <style>
 /* =============================================
    RESET & COLOR TOKENS - EVA ONLINE DESIGN
@@ -19,8 +20,8 @@
   --accent-light: rgba(255, 0, 122, 0.1);
   --online: #00ED27;
   --dot-color: rgba(72, 51, 61, 0.1);
-  --card-bg: rgba(255, 255, 255, 0.1);
-  --card-border: rgba(255, 255, 255, 0.1);
+  --card-bg: rgba(255, 255, 255, 0.35);
+  --card-border: rgba(255, 255, 255, 0.3);
   --radius: 8px;
   --radius-lg: 16px;
   --font: 'Chakra Petch', sans-serif;
@@ -35,6 +36,9 @@ body {
   overflow-x: hidden;
 }
 a { color: inherit; text-decoration: none; }
+
+/* Phosphor icon defaults */
+.ph { color: var(--accent); }
 
 /* =============================================
    INTERACTIVE DOT BACKGROUND
@@ -299,8 +303,10 @@ h2.section-title {
   margin-top: 48px;
 }
 .loop-card {
-  background: white;
-  border: 1px solid rgba(72, 51, 61, 0.1);
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
   padding: 36px 28px;
   text-align: center;
@@ -308,14 +314,14 @@ h2.section-title {
   position: relative;
 }
 .loop-card:hover {
-  border-color: var(--accent);
   transform: translateY(-4px);
   box-shadow: 0 8px 32px rgba(255, 0, 122, 0.1);
 }
 .loop-icon {
-  font-size: 48px;
+  font-size: 42px;
   margin-bottom: 16px;
   display: block;
+  color: var(--accent);
 }
 .loop-card h3 {
   font-size: 20px;
@@ -341,8 +347,10 @@ h2.section-title {
 }
 .loop-analogy {
   margin-top: 36px;
-  background: linear-gradient(135deg, rgba(255,0,122,0.06), rgba(0,0,0,0.02));
-  border: 1px solid rgba(255,0,122,0.15);
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
   padding: 28px 32px;
   font-size: 16px;
@@ -375,8 +383,10 @@ h2.section-title {
 .memory-layer {
   width: 100%;
   max-width: 520px;
-  background: white;
-  border: 1px solid rgba(72, 51, 61, 0.12);
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
   padding: 28px 32px;
   position: relative;
@@ -407,8 +417,9 @@ h2.section-title {
   box-shadow: 0 8px 32px rgba(255, 0, 122, 0.12);
 }
 .memory-layer .mem-icon {
-  font-size: 28px;
+  font-size: 24px;
   margin-right: 12px;
+  color: var(--accent);
 }
 .memory-layer h3 {
   font-size: 18px;
@@ -457,8 +468,10 @@ h2.section-title {
   margin-top: 48px;
 }
 .level-card {
-  background: white;
-  border: 1px solid rgba(72, 51, 61, 0.1);
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
   padding: 28px 24px;
   text-align: center;
@@ -466,21 +479,7 @@ h2.section-title {
   position: relative;
   overflow: hidden;
 }
-.level-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s;
-}
-.level-card:hover::before { transform: scaleX(1); }
 .level-card:hover {
-  border-color: var(--accent);
   transform: translateY(-4px);
   box-shadow: 0 8px 32px rgba(255, 0, 122, 0.1);
 }
@@ -497,6 +496,12 @@ h2.section-title {
   background: var(--accent-light);
   color: var(--accent);
   border: 2px solid var(--accent);
+}
+.level-icon {
+  font-size: 32px;
+  color: var(--accent);
+  margin-bottom: 12px;
+  display: block;
 }
 .level-card h3 {
   font-size: 15px;
@@ -523,16 +528,17 @@ h2.section-title {
 }
 .research-callout {
   margin-top: 36px;
-  background: white;
-  border: 1px solid rgba(72, 51, 61, 0.1);
-  border-left: 4px solid var(--accent);
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
   padding: 24px 28px;
   display: flex;
   gap: 16px;
   align-items: center;
 }
-.research-callout .rc-icon { font-size: 32px; min-width: 40px; }
+.research-callout .rc-icon { font-size: 32px; min-width: 40px; color: var(--accent); }
 .research-callout p {
   font-size: 14px;
   color: var(--text);
@@ -560,16 +566,14 @@ h2.section-title {
   align-items: center;
   gap: 16px;
   padding: 16px 20px;
-  background: white;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
   border-radius: var(--radius);
-  border-left: 5px solid;
   transition: all 0.3s;
 }
 .tier-bar:hover { transform: translateX(6px); }
-.tier-bar.t0 { border-left-color: #00a31c; }
-.tier-bar.t1 { border-left-color: #2196F3; }
-.tier-bar.t2 { border-left-color: #FF9800; }
-.tier-bar.t3 { border-left-color: #f44336; }
 .tier-dot {
   width: 12px;
   height: 12px;
@@ -603,19 +607,21 @@ h2.section-title {
   align-items: center;
   gap: 14px;
   padding: 14px 20px;
-  background: white;
-  border: 1px solid rgba(72, 51, 61, 0.08);
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
   border-radius: var(--radius);
   transition: all 0.3s;
 }
 .trust-badge:hover {
-  border-color: var(--accent);
   box-shadow: 0 4px 16px rgba(255, 0, 122, 0.08);
 }
 .trust-badge .tb-icon {
   font-size: 24px;
   min-width: 32px;
   text-align: center;
+  color: var(--accent);
 }
 .trust-badge h4 {
   font-size: 13px;
@@ -640,8 +646,10 @@ h2.section-title {
   margin-top: 48px;
 }
 .plugin-block {
-  background: white;
-  border: 1px solid rgba(72, 51, 61, 0.1);
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
   padding: 28px;
   text-align: center;
@@ -649,7 +657,6 @@ h2.section-title {
   position: relative;
 }
 .plugin-block:hover {
-  border-color: var(--accent);
   transform: translateY(-4px);
   box-shadow: 0 8px 32px rgba(255, 0, 122, 0.1);
 }
@@ -657,6 +664,7 @@ h2.section-title {
   font-size: 36px;
   margin-bottom: 14px;
   display: block;
+  color: var(--accent);
 }
 .plugin-block h3 {
   font-size: 15px;
@@ -717,6 +725,15 @@ h2.section-title {
   transition: color 0.2s;
   color: var(--text);
   user-select: none;
+  gap: 12px;
+}
+.accordion-trigger .acc-icon {
+  font-size: 20px;
+  color: var(--accent);
+  min-width: 24px;
+}
+.accordion-trigger .acc-label {
+  flex: 1;
 }
 .accordion-trigger:hover { color: var(--accent); }
 .accordion-trigger .arrow {
@@ -789,40 +806,6 @@ footer p {
 footer .logo { justify-content: center; margin-bottom: 12px; }
 
 /* =============================================
-   RESPONSIVE
-   ============================================= */
-@media (max-width: 768px) {
-  .loop-grid { grid-template-columns: 1fr; }
-  .loop-arrow { display: none; }
-  .levels-grid { grid-template-columns: 1fr 1fr; }
-  .shield-section { grid-template-columns: 1fr; }
-  .plugin-grid { grid-template-columns: 1fr; }
-  section { padding: 60px 0; }
-  .cloud-divider { height: 60px; }
-  .cta-avatar { width: 90px; height: 90px; }
-  .hiw-hero { min-height: auto; padding-top: 100px; padding-bottom: 40px; }
-  .memory-layer:nth-child(2) { width: 96%; }
-  .memory-layer:nth-child(3) { width: 92%; }
-}
-@media (max-width: 480px) {
-  .levels-grid { grid-template-columns: 1fr; }
-}
-
-/* =============================================
-   MOBILE NAV
-   ============================================= */
-.nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  color: var(--text);
-  font-size: 24px;
-  font-family: var(--font);
-  font-weight: 700;
-}
-/* =============================================
    OWNERSHIP SECTION
    ============================================= */
 .ownership-section {
@@ -853,22 +836,24 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
   margin-bottom: 48px;
 }
 .ownership-card {
-  background: white;
-  border: 1px solid rgba(72, 51, 61, 0.1);
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
   padding: 36px 28px;
   text-align: center;
   transition: all 0.3s;
 }
 .ownership-card:hover {
-  border-color: var(--accent);
   transform: translateY(-4px);
   box-shadow: 0 8px 32px rgba(255, 0, 122, 0.1);
 }
 .ownership-card .oc-icon {
-  font-size: 48px;
+  font-size: 42px;
   margin-bottom: 16px;
   display: block;
+  color: var(--accent);
 }
 .ownership-card h3 {
   font-size: 20px;
@@ -883,8 +868,10 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
   line-height: 1.65;
 }
 .ownership-banner {
-  background: linear-gradient(135deg, rgba(255,0,122,0.08), rgba(255,0,122,0.03));
-  border: 1px solid rgba(255,0,122,0.2);
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
   padding: 32px 36px;
   font-size: 17px;
@@ -895,9 +882,42 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
   max-width: 720px;
   margin: 0 auto;
 }
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
 @media (max-width: 768px) {
+  .loop-grid { grid-template-columns: 1fr; }
+  .loop-arrow { display: none; }
+  .levels-grid { grid-template-columns: 1fr 1fr; }
+  .shield-section { grid-template-columns: 1fr; }
+  .plugin-grid { grid-template-columns: 1fr; }
+  section { padding: 60px 0; }
+  .cloud-divider { height: 60px; }
+  .cta-avatar { width: 90px; height: 90px; }
+  .hiw-hero { min-height: auto; padding-top: 100px; padding-bottom: 40px; }
+  .memory-layer:nth-child(2) { width: 96%; }
+  .memory-layer:nth-child(3) { width: 92%; }
   .ownership-grid { grid-template-columns: 1fr; }
   .ownership-section { padding: 60px 0; }
+}
+@media (max-width: 480px) {
+  .levels-grid { grid-template-columns: 1fr; }
+}
+
+/* =============================================
+   MOBILE NAV
+   ============================================= */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--text);
+  font-size: 24px;
+  font-family: var(--font);
+  font-weight: 700;
 }
 
 @media (max-width: 768px) {
@@ -973,17 +993,17 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
     <div class="ownership-grid">
       <div class="ownership-card fade-in-left" style="transition-delay: 0.1s">
-        <span class="oc-icon">🔒</span>
+        <span class="oc-icon"><i class="ph ph-lock-key"></i></span>
         <h3>Yours Forever</h3>
         <p>You own every file. No subscriptions. No vendor lock-in. Your Eva-01 lives on your machine, not in someone else's cloud.</p>
       </div>
       <div class="ownership-card fade-in" style="transition-delay: 0.25s">
-        <span class="oc-icon">♾️</span>
+        <span class="oc-icon"><i class="ph ph-arrows-counter-clockwise"></i></span>
         <h3>Infinitely Rebootable</h3>
         <p>Reset, export, or start fresh anytime. Your profile and preferences are portable files you can back up, version, and restore.</p>
       </div>
       <div class="ownership-card fade-in-right" style="transition-delay: 0.4s">
-        <span class="oc-icon">🌐</span>
+        <span class="oc-icon"><i class="ph ph-globe-hemisphere-west"></i></span>
         <h3>Works Everywhere</h3>
         <p>Export your profile to other AI systems — Claude, Hermes, ChatGPT, custom agents. Eva-01's architecture makes every AI you use smarter about you.</p>
       </div>
@@ -1017,19 +1037,19 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
     <div class="loop-grid">
       <div class="loop-card fade-in-left" style="transition-delay: 0.1s">
-        <span class="loop-icon">👁️</span>
+        <span class="loop-icon"><i class="ph ph-ear"></i></span>
         <h3>Notice</h3>
         <p>Eva picks up on what works and what doesn't. Your preferences, your patterns, the things that light you up, and the things that shut you down.</p>
         <span class="loop-arrow">→</span>
       </div>
       <div class="loop-card fade-in" style="transition-delay: 0.25s">
-        <span class="loop-icon">📝</span>
+        <span class="loop-icon"><i class="ph ph-pencil-line"></i></span>
         <h3>Write</h3>
         <p>She writes down what she learns in her private memory. Not just facts. Patterns. How you like things done. What makes you tick.</p>
         <span class="loop-arrow">→</span>
       </div>
       <div class="loop-card fade-in-right" style="transition-delay: 0.4s">
-        <span class="loop-icon">🎯</span>
+        <span class="loop-icon"><i class="ph ph-sliders-horizontal"></i></span>
         <h3>Adjust</h3>
         <p>Next time you talk, she applies everything she's learned. Better answers. Better timing. Better everything. Every single conversation makes her sharper.</p>
       </div>
@@ -1064,15 +1084,15 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
     <div class="memory-stack">
       <div class="memory-layer fade-in" style="transition-delay: 0.1s">
-        <h3><span class="mem-icon">📌</span> Today <span class="memory-badge badge-today">Live</span></h3>
+        <h3><span class="mem-icon"><i class="ph ph-calendar-dot"></i></span> Today <span class="memory-badge badge-today">Live</span></h3>
         <p>Everything from your conversations today. Decisions you made, tasks you mentioned, things that came up. Fresh, detailed, and ready whenever you need it.</p>
       </div>
       <div class="memory-layer fade-in" style="transition-delay: 0.25s">
-        <h3><span class="mem-icon">📋</span> This Week <span class="memory-badge badge-week">Reviewed</span></h3>
+        <h3><span class="mem-icon"><i class="ph ph-calendar-check"></i></span> This Week <span class="memory-badge badge-week">Reviewed</span></h3>
         <p>Every week, Eva reviews her recent notes. She finds the patterns, spots what matters, and carries forward the insights that will help you next week.</p>
       </div>
       <div class="memory-layer fade-in" style="transition-delay: 0.4s">
-        <h3><span class="mem-icon">💎</span> Forever <span class="memory-badge badge-forever">Curated</span></h3>
+        <h3><span class="mem-icon"><i class="ph ph-brain"></i></span> Forever <span class="memory-badge badge-forever">Curated</span></h3>
         <p>The important stuff graduates to permanent memory. Your working style, your preferences, how you make decisions. This is what makes Eva uniquely yours.</p>
       </div>
     </div>
@@ -1103,22 +1123,26 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
     <div class="levels-grid">
       <div class="level-card fade-in" style="transition-delay: 0.1s">
+        <span class="level-icon"><i class="ph ph-magnifying-glass"></i></span>
         <div class="level-num">0</div>
         <h3>Only When You Ask</h3>
         <p>The default. Eva never researches anything unless you specifically tell her to. Zero surprises.</p>
         <span class="level-default">Default</span>
       </div>
       <div class="level-card fade-in" style="transition-delay: 0.2s">
+        <span class="level-icon"><i class="ph ph-lightbulb"></i></span>
         <div class="level-num">1</div>
         <h3>She Suggests Topics</h3>
         <p>Eva spots knowledge gaps and suggests research. "Want me to look into that?" She always asks first.</p>
       </div>
       <div class="level-card fade-in" style="transition-delay: 0.3s">
+        <span class="level-icon"><i class="ph ph-target"></i></span>
         <div class="level-num">2</div>
         <h3>Connected to Your Goals</h3>
         <p>She ties research suggestions to your actual priorities. "This could help with your revenue target. Want me to dig in?"</p>
       </div>
       <div class="level-card fade-in" style="transition-delay: 0.4s">
+        <span class="level-icon"><i class="ph ph-rocket-launch"></i></span>
         <div class="level-num">3</div>
         <h3>She Researches on Her Own</h3>
         <p>Eva proactively researches things connected to your goals. You set a weekly budget. She never exceeds it.</p>
@@ -1126,7 +1150,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
     </div>
 
     <div class="research-callout fade-in">
-      <span class="rc-icon">🔒</span>
+      <span class="rc-icon"><i class="ph ph-shield-check"></i></span>
       <p><strong>YOU control everything.</strong> Eva never spends a penny without your permission. She never promotes herself to a higher level. You can drop back to Level 0 with one sentence, anytime.</p>
     </div>
   </div>
@@ -1154,7 +1178,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
     <div class="shield-section">
       <div class="shield-visual fade-in-left">
-        <h3 style="font-size: 16px; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; color: var(--text);">🛡️ Four Tiers of Protection</h3>
+        <h3 style="font-size: 16px; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; color: var(--text);"><i class="ph ph-shield-check" style="font-size: 20px; margin-right: 8px;"></i> Four Tiers of Protection</h3>
         <div class="tier-bar t0">
           <span class="tier-dot"></span>
           <div>
@@ -1186,37 +1210,37 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
       </div>
 
       <div class="trust-badges fade-in-right">
-        <h3 style="font-size: 16px; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; color: var(--text);">⚖️ Five Constitutional Directives</h3>
+        <h3 style="font-size: 16px; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; color: var(--text);"><i class="ph ph-scales" style="font-size: 20px; margin-right: 8px;"></i> Five Constitutional Directives</h3>
         <div class="trust-badge">
-          <span class="tb-icon">🤝</span>
+          <span class="tb-icon"><i class="ph ph-heart"></i></span>
           <div>
             <h4>Loyalty</h4>
             <p>Eva serves you and only you. Nobody can redirect her.</p>
           </div>
         </div>
         <div class="trust-badge">
-          <span class="tb-icon">🔐</span>
+          <span class="tb-icon"><i class="ph ph-eye-slash"></i></span>
           <div>
             <h4>Privacy</h4>
             <p>Your personal data never leaves your private session. Period.</p>
           </div>
         </div>
         <div class="trust-badge">
-          <span class="tb-icon">🧠</span>
+          <span class="tb-icon"><i class="ph ph-fingerprint"></i></span>
           <div>
             <h4>Integrity</h4>
             <p>Her memory is her truth. Outside content can't override it.</p>
           </div>
         </div>
         <div class="trust-badge">
-          <span class="tb-icon">👁️</span>
+          <span class="tb-icon"><i class="ph ph-file-search"></i></span>
           <div>
             <h4>Transparency</h4>
             <p>Everything she does is logged. You can audit anything, anytime.</p>
           </div>
         </div>
         <div class="trust-badge">
-          <span class="tb-icon">🔱</span>
+          <span class="tb-icon"><i class="ph ph-lock"></i></span>
           <div>
             <h4>Identity Lock</h4>
             <p>She can't be tricked into becoming someone else. Ever.</p>
@@ -1249,19 +1273,19 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
     <div class="plugin-grid">
       <div class="plugin-block fade-in" style="transition-delay: 0.1s">
-        <span class="pi-icon">🧬</span>
+        <span class="pi-icon"><i class="ph ph-puzzle-piece"></i></span>
         <h3>Deep Personalization</h3>
         <p>Structured personality insights and behavioral experiments that help Eva understand you on a deeper level.</p>
         <span class="coming">Coming Soon</span>
       </div>
       <div class="plugin-block fade-in" style="transition-delay: 0.2s">
-        <span class="pi-icon">📡</span>
+        <span class="pi-icon"><i class="ph ph-puzzle-piece"></i></span>
         <h3>Automated Research</h3>
         <p>Higher-autonomy research that runs in the background, always connected to your goals and priorities.</p>
         <span class="coming">Coming Soon</span>
       </div>
       <div class="plugin-block fade-in" style="transition-delay: 0.3s">
-        <span class="pi-icon">📅</span>
+        <span class="pi-icon"><i class="ph ph-puzzle-piece"></i></span>
         <h3>Calendar & Email</h3>
         <p>Proactive briefings, inbox triage, and meeting prep that happen automatically every morning.</p>
         <span class="coming">Coming Soon</span>
@@ -1288,14 +1312,14 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
   <div class="wrap">
     <div class="text-center fade-in">
       <div class="tag">For the Curious</div>
-      <h2 class="section-title">The Technical Details</h2>
+      <h2 class="section-title"><i class="ph ph-code" style="font-size: 36px; margin-right: 12px;"></i> The Technical Details</h2>
       <p class="section-sub">Everything above, explained for the technically curious. Click to expand.</p>
     </div>
 
     <div class="accordion-list">
       <div class="accordion-item fade-in" style="transition-delay: 0.05s">
         <div class="accordion-trigger" onclick="toggleAccordion(this)">
-          File Architecture <span class="arrow">▼</span>
+          <i class="ph ph-folder-open acc-icon"></i> <span class="acc-label">File Architecture</span> <span class="arrow">▼</span>
         </div>
         <div class="accordion-content">
           <p class="brief">Eva-01 is built entirely from plain-text Markdown files. No compiled code, no binaries, no hidden logic. Everything is human-readable.</p>
@@ -1307,7 +1331,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
       <div class="accordion-item fade-in" style="transition-delay: 0.1s">
         <div class="accordion-trigger" onclick="toggleAccordion(this)">
-          Memory Search <span class="arrow">▼</span>
+          <i class="ph ph-magnifying-glass acc-icon"></i> <span class="acc-label">Memory Search</span> <span class="arrow">▼</span>
         </div>
         <div class="accordion-content">
           <p class="brief">When Eva needs to recall something, she uses a hybrid search system that combines meaning-based and keyword-based matching.</p>
@@ -1319,7 +1343,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
       <div class="accordion-item fade-in" style="transition-delay: 0.15s">
         <div class="accordion-trigger" onclick="toggleAccordion(this)">
-          Security Layers <span class="arrow">▼</span>
+          <i class="ph ph-shield-check acc-icon"></i> <span class="acc-label">Security Layers</span> <span class="arrow">▼</span>
         </div>
         <div class="accordion-content">
           <p class="brief">Six defense layers protect your data from external threats, injection attacks, and accidental leakage.</p>
@@ -1331,7 +1355,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
       <div class="accordion-item fade-in" style="transition-delay: 0.2s">
         <div class="accordion-trigger" onclick="toggleAccordion(this)">
-          Automation <span class="arrow">▼</span>
+          <i class="ph ph-gear acc-icon"></i> <span class="acc-label">Automation</span> <span class="arrow">▼</span>
         </div>
         <div class="accordion-content">
           <p class="brief">Eva runs background checks and reviews on autopilot, keeping things organized without you lifting a finger.</p>
@@ -1343,7 +1367,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 
       <div class="accordion-item fade-in" style="transition-delay: 0.25s">
         <div class="accordion-trigger" onclick="toggleAccordion(this)">
-          Delegation <span class="arrow">▼</span>
+          <i class="ph ph-users-three acc-icon"></i> <span class="acc-label">Delegation</span> <span class="arrow">▼</span>
         </div>
         <div class="accordion-content">
           <p class="brief">Eva can spawn worker agents for heavy-lifting tasks while keeping your sensitive data completely locked down.</p>
