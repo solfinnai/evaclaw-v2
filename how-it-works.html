@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How The Magic Works — Eva-01 | OpenClaw</title>
+<title>How The Magic Works — Eva-01 | Eva Online</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -822,6 +822,84 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
   font-family: var(--font);
   font-weight: 700;
 }
+/* =============================================
+   OWNERSHIP SECTION
+   ============================================= */
+.ownership-section {
+  background: var(--bg2);
+  padding: 100px 0;
+}
+.ownership-title {
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.05;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+.ownership-subtitle {
+  font-size: 18px;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 48px;
+}
+.ownership-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.ownership-card {
+  background: white;
+  border: 1px solid rgba(72, 51, 61, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 36px 28px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.ownership-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(255, 0, 122, 0.1);
+}
+.ownership-card .oc-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+}
+.ownership-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+.ownership-card p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.65;
+}
+.ownership-banner {
+  background: linear-gradient(135deg, rgba(255,0,122,0.08), rgba(255,0,122,0.03));
+  border: 1px solid rgba(255,0,122,0.2);
+  border-radius: var(--radius-lg);
+  padding: 32px 36px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.7;
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+}
+@media (max-width: 768px) {
+  .ownership-grid { grid-template-columns: 1fr; }
+  .ownership-section { padding: 60px 0; }
+}
+
 @media (max-width: 768px) {
   .nav-toggle { display: block; }
   .nav-links {
@@ -867,8 +945,8 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
     <div class="fade-in">
       <span class="hero-icon">✨</span>
       <div class="tag"><span class="dot"></span> Under the Hood</div>
-      <h1>How The <span class="accent">Magic</span> Works</h1>
-      <p class="subtitle">Eva-01 isn't just an AI chatbot. She's a learning system that gets smarter about YOU every single day.</p>
+      <h1>The Most <span class="accent">Personal</span> Assistant Ever Made</h1>
+      <p class="subtitle">Eva-01 isn't just an AI chatbot. She's a learning system that gets smarter about YOU every single day. And she's yours forever.</p>
     </div>
   </div>
 </section>
@@ -879,6 +957,50 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
     <path d="M0,60 C120,100 240,110 360,80 C480,50 540,90 720,70 C900,50 1020,100 1140,85 C1260,70 1380,90 1440,60 L1440,120 L0,120 Z" fill="rgba(232,213,227,0.6)"/>
     <path d="M0,80 C180,110 300,90 480,95 C660,100 780,70 960,85 C1140,100 1300,80 1440,90 L1440,120 L0,120 Z" fill="rgba(241,227,235,0.8)"/>
     <path d="M0,95 C200,105 400,100 600,108 C800,100 1000,110 1200,105 C1350,100 1400,108 1440,100 L1440,120 L0,120 Z" fill="#E8D5E3"/>
+  </svg>
+</div>
+
+<!-- ==========================================
+     SECTION: OWNERSHIP
+     ========================================== -->
+<section class="ownership-section">
+  <div class="wrap">
+    <div class="text-center fade-in">
+      <div class="tag"><span class="dot"></span> Why Eva-01</div>
+      <h2 class="ownership-title">The Most Personal AI Assistant Ever Made</h2>
+      <p class="ownership-subtitle">Hyper-personalized. Fully owned by you. Infinitely portable.</p>
+    </div>
+
+    <div class="ownership-grid">
+      <div class="ownership-card fade-in-left" style="transition-delay: 0.1s">
+        <span class="oc-icon">🔒</span>
+        <h3>Yours Forever</h3>
+        <p>You own every file. No subscriptions. No vendor lock-in. Your Eva-01 lives on your machine, not in someone else's cloud.</p>
+      </div>
+      <div class="ownership-card fade-in" style="transition-delay: 0.25s">
+        <span class="oc-icon">♾️</span>
+        <h3>Infinitely Rebootable</h3>
+        <p>Reset, export, or start fresh anytime. Your profile and preferences are portable files you can back up, version, and restore.</p>
+      </div>
+      <div class="ownership-card fade-in-right" style="transition-delay: 0.4s">
+        <span class="oc-icon">🌐</span>
+        <h3>Works Everywhere</h3>
+        <p>Export your profile to other AI systems — Claude, Hermes, ChatGPT, custom agents. Eva-01's architecture makes every AI you use smarter about you.</p>
+      </div>
+    </div>
+
+    <div class="ownership-banner fade-in">
+      Your data. Your machine. Your rules. No cloud dependency. No subscription trap. Just a brilliant assistant that knows you better every day.
+    </div>
+  </div>
+</section>
+
+<!-- Cloud Divider -->
+<div class="cloud-divider flip">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,55 C200,30 400,50 600,35 C800,20 1000,55 1200,40 C1350,30 1420,45 1440,35 L1440,0 L0,0 Z" fill="rgba(232,213,227,0.4)"/>
+    <path d="M0,35 C280,50 520,25 760,40 C1000,55 1180,30 1440,45 L1440,0 L0,0 Z" fill="rgba(241,227,235,0.6)"/>
+    <path d="M0,18 C360,28 720,15 1080,22 C1260,26 1380,19 1440,16 L1440,0 L0,0 Z" fill="#F1E3EB"/>
   </svg>
 </div>
 
@@ -1261,8 +1383,8 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
 <!-- FOOTER -->
 <footer>
   <div class="wrap">
-    <div class="logo" style="justify-content: center; margin-bottom: 12px;"><img src="https://mintcdn.com/clawdhub/FaXdIfo7gPK_jSWb/assets/openclaw-logo-text.png?w=1100&fit=max&auto=format&n=FaXdIfo7gPK_jSWb&q=85&s=88255cdd2554a6b341c89ae709743441" alt="OpenClaw" style="height: 28px; width: auto; object-fit: contain;"></div>
-    <p>Your data stays on your machine. Always.</p>
+    <div class="logo" style="justify-content: center; margin-bottom: 12px;"><img src="images/logo.svg" alt="Eva Online" style="width:28px;height:auto;"> EVA ONLINE</div>
+    <p>&copy; 2025 Eva Online. All rights reserved.</p>
   </div>
 </footer>
 
