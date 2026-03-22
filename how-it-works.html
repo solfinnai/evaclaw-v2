@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How The Magic Works — Eva-01 | OpenClaw</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   RESET & COLOR TOKENS - EVA ONLINE DESIGN
+   ============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #F1E3EB;
+  --bg2: #E8D5E3;
+  --text: #48333D;
+  --accent: #FF007A;
+  --accent-light: rgba(255, 0, 122, 0.1);
+  --online: #00ED27;
+  --dot-color: rgba(72, 51, 61, 0.1);
+  --card-bg: rgba(255, 255, 255, 0.1);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --radius: 8px;
+  --radius-lg: 16px;
+  --font: 'Chakra Petch', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+/* =============================================
+   INTERACTIVE DOT BACKGROUND
+   ============================================= */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* =============================================
+   LAYOUT
+   ============================================= */
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+.wrap-sm {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+section { padding: 100px 0; }
+.text-center { text-align: center; }
+
+/* =============================================
+   NAV
+   ============================================= */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  padding: 16px 24px;
+  background: var(--bg);
+  border-bottom: 1px solid rgba(72, 51, 61, 0.1);
+}
+nav .inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.nav-links {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+.nav-links a {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text);
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+.nav-links a.active { color: var(--accent); }
+.nav-cta {
+  padding: 10px 20px;
+  background: var(--accent);
+  color: white !important;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+}
+.nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* =============================================
+   BUTTONS
+   ============================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: var(--font);
+}
+.btn-eva {
+  background: var(--accent);
+  color: white;
+}
+.btn-eva:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 2px solid var(--text);
+}
+.btn-ghost:hover { background: rgba(72, 51, 61, 0.05); }
+.btn-lg { padding: 18px 36px; font-size: 17px; border-radius: var(--radius-lg); }
+
+/* =============================================
+   SECTION HEADERS
+   ============================================= */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  background: var(--accent-light);
+  border: 1px solid var(--accent);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.tag .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--online);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+h2.section-title {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.section-sub {
+  font-size: 16px;
+  color: var(--text);
+  max-width: 580px;
+  line-height: 1.7;
+}
+.text-center .section-sub { margin: 0 auto; }
+
+/* Cloud Divider */
+.cloud-divider {
+  position: relative;
+  height: 120px;
+  overflow: hidden;
+  background: transparent;
+  pointer-events: none;
+  z-index: 2;
+}
+.cloud-divider svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.cloud-divider.flip svg {
+  transform: scaleY(-1);
+  top: 0;
+  bottom: auto;
+}
+
+/* =============================================
+   SCROLL ANIMATIONS
+   ============================================= */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-in-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.fade-in-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* =============================================
+   HERO (HOW IT WORKS)
+   ============================================= */
+.hiw-hero {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  padding-top: 100px;
+  padding-bottom: 60px;
+  position: relative;
+}
+.hiw-hero h1 {
+  font-size: clamp(42px, 6vw, 64px);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.05;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  color: var(--text);
+}
+.hiw-hero h1 .accent { color: var(--accent); }
+.hiw-hero .subtitle {
+  font-size: 19px;
+  color: var(--text);
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.hero-icon {
+  font-size: 72px;
+  margin-bottom: 24px;
+  display: block;
+  animation: orbFloat 6s ease-in-out infinite;
+}
+@keyframes orbFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+
+/* =============================================
+   SECTION 2: LEARNING LOOP
+   ============================================= */
+.loop-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+.loop-card {
+  background: white;
+  border: 1px solid rgba(72, 51, 61, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 36px 28px;
+  text-align: center;
+  transition: all 0.3s;
+  position: relative;
+}
+.loop-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(255, 0, 122, 0.1);
+}
+.loop-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+}
+.loop-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+.loop-card p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.65;
+}
+.loop-arrow {
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: var(--accent);
+  font-weight: 700;
+  z-index: 5;
+}
+.loop-analogy {
+  margin-top: 36px;
+  background: linear-gradient(135deg, rgba(255,0,122,0.06), rgba(0,0,0,0.02));
+  border: 1px solid rgba(255,0,122,0.15);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  font-size: 16px;
+  color: var(--text);
+  line-height: 1.7;
+  font-style: italic;
+}
+.loop-analogy span {
+  display: block;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+/* =============================================
+   SECTION 3: MEMORY
+   ============================================= */
+.memory-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin-top: 48px;
+  position: relative;
+}
+.memory-layer {
+  width: 100%;
+  max-width: 520px;
+  background: white;
+  border: 1px solid rgba(72, 51, 61, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  position: relative;
+  transition: all 0.3s;
+}
+.memory-layer:nth-child(1) {
+  z-index: 3;
+  box-shadow: 0 4px 20px rgba(72, 51, 61, 0.1);
+}
+.memory-layer:nth-child(2) {
+  z-index: 2;
+  margin-top: -12px;
+  width: 94%;
+  max-width: 490px;
+  opacity: 0.92;
+  box-shadow: 0 4px 16px rgba(72, 51, 61, 0.08);
+}
+.memory-layer:nth-child(3) {
+  z-index: 1;
+  margin-top: -12px;
+  width: 88%;
+  max-width: 460px;
+  opacity: 0.85;
+  box-shadow: 0 4px 12px rgba(72, 51, 61, 0.06);
+}
+.memory-layer:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(255, 0, 122, 0.12);
+}
+.memory-layer .mem-icon {
+  font-size: 28px;
+  margin-right: 12px;
+}
+.memory-layer h3 {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+}
+.memory-layer p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.65;
+  padding-left: 40px;
+}
+.memory-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-left: auto;
+}
+.badge-today { background: rgba(0, 237, 39, 0.15); color: #00a31c; }
+.badge-week { background: rgba(255, 0, 122, 0.1); color: var(--accent); }
+.badge-forever { background: rgba(72, 51, 61, 0.1); color: var(--text); }
+
+.memory-note {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--text);
+  font-weight: 600;
+}
+.memory-note .accent { color: var(--accent); }
+
+/* =============================================
+   SECTION 4: RESEARCH LEVELS
+   ============================================= */
+.levels-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+.level-card {
+  background: white;
+  border: 1px solid rgba(72, 51, 61, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  text-align: center;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.level-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s;
+}
+.level-card:hover::before { transform: scaleX(1); }
+.level-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(255, 0, 122, 0.1);
+}
+.level-num {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 20px;
+  margin: 0 auto 16px;
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 2px solid var(--accent);
+}
+.level-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.level-card p {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+}
+.level-default {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: rgba(0, 237, 39, 0.15);
+  color: #00a31c;
+}
+.research-callout {
+  margin-top: 36px;
+  background: white;
+  border: 1px solid rgba(72, 51, 61, 0.1);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.research-callout .rc-icon { font-size: 32px; min-width: 40px; }
+.research-callout p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.65;
+}
+.research-callout strong { color: var(--accent); }
+
+/* =============================================
+   SECTION 5: SECURITY / GUARDRAILS
+   ============================================= */
+.shield-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+  margin-top: 48px;
+}
+.shield-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tier-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: white;
+  border-radius: var(--radius);
+  border-left: 5px solid;
+  transition: all 0.3s;
+}
+.tier-bar:hover { transform: translateX(6px); }
+.tier-bar.t0 { border-left-color: #00a31c; }
+.tier-bar.t1 { border-left-color: #2196F3; }
+.tier-bar.t2 { border-left-color: #FF9800; }
+.tier-bar.t3 { border-left-color: #f44336; }
+.tier-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.t0 .tier-dot { background: #00a31c; }
+.t1 .tier-dot { background: #2196F3; }
+.t2 .tier-dot { background: #FF9800; }
+.t3 .tier-dot { background: #f44336; }
+.tier-bar h4 {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.tier-bar p {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+.trust-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  background: white;
+  border: 1px solid rgba(72, 51, 61, 0.08);
+  border-radius: var(--radius);
+  transition: all 0.3s;
+}
+.trust-badge:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 16px rgba(255, 0, 122, 0.08);
+}
+.trust-badge .tb-icon {
+  font-size: 24px;
+  min-width: 32px;
+  text-align: center;
+}
+.trust-badge h4 {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.trust-badge p {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+/* =============================================
+   SECTION 6: PLUGINS
+   ============================================= */
+.plugin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+.plugin-block {
+  background: white;
+  border: 1px solid rgba(72, 51, 61, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  text-align: center;
+  transition: all 0.3s;
+  position: relative;
+}
+.plugin-block:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(255, 0, 122, 0.1);
+}
+.plugin-block .pi-icon {
+  font-size: 36px;
+  margin-bottom: 14px;
+  display: block;
+}
+.plugin-block h3 {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.plugin-block p {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+}
+.plugin-block .coming {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: var(--accent-light);
+  color: var(--accent);
+}
+
+.plugin-note {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.7;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* =============================================
+   SECTION 7: ACCORDION
+   ============================================= */
+.accordion-list {
+  margin-top: 48px;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.accordion-item {
+  border-bottom: 1px solid rgba(72, 51, 61, 0.1);
+}
+.accordion-trigger {
+  padding: 20px 0;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: color 0.2s;
+  color: var(--text);
+  user-select: none;
+}
+.accordion-trigger:hover { color: var(--accent); }
+.accordion-trigger .arrow {
+  transition: transform 0.3s;
+  color: var(--text);
+  font-size: 14px;
+}
+.accordion-item.open .accordion-trigger .arrow { transform: rotate(180deg); }
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.3s;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.7;
+}
+.accordion-item.open .accordion-content {
+  max-height: 600px;
+  padding-bottom: 24px;
+}
+.accordion-content .brief {
+  font-size: 15px;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+.accordion-content .tech {
+  background: rgba(72, 51, 61, 0.04);
+  border: 1px solid rgba(72, 51, 61, 0.08);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.accordion-content .tech code {
+  font-family: monospace;
+  font-size: 12px;
+  background: rgba(72, 51, 61, 0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--accent);
+}
+
+/* =============================================
+   CTA SECTION
+   ============================================= */
+.cta-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 24px;
+  display: block;
+  filter: drop-shadow(0 8px 32px rgba(255, 0, 122, 0.25));
+  border: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+footer {
+  padding: 48px 0;
+  border-top: 1px solid rgba(72, 51, 61, 0.1);
+  text-align: center;
+  background: var(--bg);
+}
+footer p {
+  font-size: 13px;
+  color: var(--text);
+}
+footer .logo { justify-content: center; margin-bottom: 12px; }
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 768px) {
+  .loop-grid { grid-template-columns: 1fr; }
+  .loop-arrow { display: none; }
+  .levels-grid { grid-template-columns: 1fr 1fr; }
+  .shield-section { grid-template-columns: 1fr; }
+  .plugin-grid { grid-template-columns: 1fr; }
+  section { padding: 60px 0; }
+  .cloud-divider { height: 60px; }
+  .cta-avatar { width: 90px; height: 90px; }
+  .hiw-hero { min-height: auto; padding-top: 100px; padding-bottom: 40px; }
+  .memory-layer:nth-child(2) { width: 96%; }
+  .memory-layer:nth-child(3) { width: 92%; }
+}
+@media (max-width: 480px) {
+  .levels-grid { grid-template-columns: 1fr; }
+}
+
+/* =============================================
+   MOBILE NAV
+   ============================================= */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--text);
+  font-size: 24px;
+  font-family: var(--font);
+  font-weight: 700;
+}
+@media (max-width: 768px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    flex-direction: column;
+    padding: 20px 24px;
+    gap: 16px;
+    border-bottom: 1px solid rgba(72, 51, 61, 0.1);
+    box-shadow: 0 4px 12px rgba(72, 51, 61, 0.08);
+  }
+  .nav-links.open { display: flex; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="inner">
+    <a href="index.html" class="logo"><img src="images/logo.svg" alt="Eva" style="width:36px;height:auto;"> EVA ONLINE</a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <div class="nav-links">
+      <a href="how-it-works.html" class="active">How The Magic Works</a>
+      <a href="index.html#process">How It Works</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#questionnaire" class="nav-cta">Meet Eva-01</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ==========================================
+     SECTION 1: HERO
+     ========================================== -->
+<section class="hiw-hero">
+  <div class="wrap text-center">
+    <div class="fade-in">
+      <span class="hero-icon">✨</span>
+      <div class="tag"><span class="dot"></span> Under the Hood</div>
+      <h1>How The <span class="accent">Magic</span> Works</h1>
+      <p class="subtitle">Eva-01 isn't just an AI chatbot. She's a learning system that gets smarter about YOU every single day.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Cloud Divider -->
+<div class="cloud-divider">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,60 C120,100 240,110 360,80 C480,50 540,90 720,70 C900,50 1020,100 1140,85 C1260,70 1380,90 1440,60 L1440,120 L0,120 Z" fill="rgba(232,213,227,0.6)"/>
+    <path d="M0,80 C180,110 300,90 480,95 C660,100 780,70 960,85 C1140,100 1300,80 1440,90 L1440,120 L0,120 Z" fill="rgba(241,227,235,0.8)"/>
+    <path d="M0,95 C200,105 400,100 600,108 C800,100 1000,110 1200,105 C1350,100 1400,108 1440,100 L1440,120 L0,120 Z" fill="#E8D5E3"/>
+  </svg>
+</div>
+
+<!-- ==========================================
+     SECTION 2: SHE LEARNS BY LISTENING
+     ========================================== -->
+<section style="background: var(--bg2);">
+  <div class="wrap">
+    <div class="text-center fade-in">
+      <div class="tag">The Learning Loop</div>
+      <h2 class="section-title">She Learns By Listening</h2>
+      <p class="section-sub">Every conversation teaches Eva something new. She's always paying attention, always getting better.</p>
+    </div>
+
+    <div class="loop-grid">
+      <div class="loop-card fade-in-left" style="transition-delay: 0.1s">
+        <span class="loop-icon">👁️</span>
+        <h3>Notice</h3>
+        <p>Eva picks up on what works and what doesn't. Your preferences, your patterns, the things that light you up, and the things that shut you down.</p>
+        <span class="loop-arrow">→</span>
+      </div>
+      <div class="loop-card fade-in" style="transition-delay: 0.25s">
+        <span class="loop-icon">📝</span>
+        <h3>Write</h3>
+        <p>She writes down what she learns in her private memory. Not just facts. Patterns. How you like things done. What makes you tick.</p>
+        <span class="loop-arrow">→</span>
+      </div>
+      <div class="loop-card fade-in-right" style="transition-delay: 0.4s">
+        <span class="loop-icon">🎯</span>
+        <h3>Adjust</h3>
+        <p>Next time you talk, she applies everything she's learned. Better answers. Better timing. Better everything. Every single conversation makes her sharper.</p>
+      </div>
+    </div>
+
+    <div class="loop-analogy fade-in">
+      <span>Think of it like this</span>
+      Like a brilliant assistant who keeps a private journal about what makes you tick. She never forgets a detail, never repeats a mistake, and always comes back the next day better than before.
+    </div>
+  </div>
+</section>
+
+<!-- Cloud Divider -->
+<div class="cloud-divider flip">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,55 C200,30 400,50 600,35 C800,20 1000,55 1200,40 C1350,30 1420,45 1440,35 L1440,0 L0,0 Z" fill="rgba(232,213,227,0.4)"/>
+    <path d="M0,35 C280,50 520,25 760,40 C1000,55 1180,30 1440,45 L1440,0 L0,0 Z" fill="rgba(241,227,235,0.6)"/>
+    <path d="M0,18 C360,28 720,15 1080,22 C1260,26 1380,19 1440,16 L1440,0 L0,0 Z" fill="#F1E3EB"/>
+  </svg>
+</div>
+
+<!-- ==========================================
+     SECTION 3: SHE NEVER FORGETS
+     ========================================== -->
+<section>
+  <div class="wrap">
+    <div class="text-center fade-in">
+      <div class="tag">Memory System</div>
+      <h2 class="section-title">She Never Forgets</h2>
+      <p class="section-sub">Three layers of memory. She remembers today, reviews weekly, keeps the important stuff forever. She gets better over time, not worse.</p>
+    </div>
+
+    <div class="memory-stack">
+      <div class="memory-layer fade-in" style="transition-delay: 0.1s">
+        <h3><span class="mem-icon">📌</span> Today <span class="memory-badge badge-today">Live</span></h3>
+        <p>Everything from your conversations today. Decisions you made, tasks you mentioned, things that came up. Fresh, detailed, and ready whenever you need it.</p>
+      </div>
+      <div class="memory-layer fade-in" style="transition-delay: 0.25s">
+        <h3><span class="mem-icon">📋</span> This Week <span class="memory-badge badge-week">Reviewed</span></h3>
+        <p>Every week, Eva reviews her recent notes. She finds the patterns, spots what matters, and carries forward the insights that will help you next week.</p>
+      </div>
+      <div class="memory-layer fade-in" style="transition-delay: 0.4s">
+        <h3><span class="mem-icon">💎</span> Forever <span class="memory-badge badge-forever">Curated</span></h3>
+        <p>The important stuff graduates to permanent memory. Your working style, your preferences, how you make decisions. This is what makes Eva uniquely yours.</p>
+      </div>
+    </div>
+
+    <p class="memory-note fade-in">Most AI tools forget everything between conversations.<br>Eva-01 <span class="accent">remembers everything that matters</span>. And she only gets sharper.</p>
+  </div>
+</section>
+
+<!-- Cloud Divider -->
+<div class="cloud-divider">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,50 C160,90 320,70 480,85 C640,100 800,60 960,75 C1120,90 1280,65 1440,55 L1440,120 L0,120 Z" fill="rgba(232,213,227,0.5)"/>
+    <path d="M0,75 C200,95 440,80 660,90 C880,100 1060,75 1240,88 C1360,95 1420,85 1440,80 L1440,120 L0,120 Z" fill="rgba(241,227,235,0.7)"/>
+    <path d="M0,95 C300,105 600,98 900,103 C1100,108 1300,100 1440,102 L1440,120 L0,120 Z" fill="#E8D5E3"/>
+  </svg>
+</div>
+
+<!-- ==========================================
+     SECTION 4: SHE RESEARCHES FOR YOU
+     ========================================== -->
+<section style="background: var(--bg2);">
+  <div class="wrap">
+    <div class="text-center fade-in">
+      <div class="tag">External Research</div>
+      <h2 class="section-title">She Researches For You</h2>
+      <p class="section-sub">Eva can search the internet, analyze competitors, and dig into anything you need. But only when YOU say so. Four levels, you pick.</p>
+    </div>
+
+    <div class="levels-grid">
+      <div class="level-card fade-in" style="transition-delay: 0.1s">
+        <div class="level-num">0</div>
+        <h3>Only When You Ask</h3>
+        <p>The default. Eva never researches anything unless you specifically tell her to. Zero surprises.</p>
+        <span class="level-default">Default</span>
+      </div>
+      <div class="level-card fade-in" style="transition-delay: 0.2s">
+        <div class="level-num">1</div>
+        <h3>She Suggests Topics</h3>
+        <p>Eva spots knowledge gaps and suggests research. "Want me to look into that?" She always asks first.</p>
+      </div>
+      <div class="level-card fade-in" style="transition-delay: 0.3s">
+        <div class="level-num">2</div>
+        <h3>Connected to Your Goals</h3>
+        <p>She ties research suggestions to your actual priorities. "This could help with your revenue target. Want me to dig in?"</p>
+      </div>
+      <div class="level-card fade-in" style="transition-delay: 0.4s">
+        <div class="level-num">3</div>
+        <h3>She Researches on Her Own</h3>
+        <p>Eva proactively researches things connected to your goals. You set a weekly budget. She never exceeds it.</p>
+      </div>
+    </div>
+
+    <div class="research-callout fade-in">
+      <span class="rc-icon">🔒</span>
+      <p><strong>YOU control everything.</strong> Eva never spends a penny without your permission. She never promotes herself to a higher level. You can drop back to Level 0 with one sentence, anytime.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Cloud Divider -->
+<div class="cloud-divider flip">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,60 C180,20 360,40 540,30 C720,20 840,50 1020,35 C1200,20 1340,45 1440,30 L1440,0 L0,0 Z" fill="rgba(232,213,227,0.5)"/>
+    <path d="M0,40 C240,60 480,25 720,45 C960,65 1100,30 1440,50 L1440,0 L0,0 Z" fill="rgba(241,227,235,0.7)"/>
+    <path d="M0,20 C300,35 600,15 900,25 C1100,30 1300,18 1440,22 L1440,0 L0,0 Z" fill="#F1E3EB"/>
+  </svg>
+</div>
+
+<!-- ==========================================
+     SECTION 5: SHE PROTECTS YOUR SECRETS
+     ========================================== -->
+<section>
+  <div class="wrap">
+    <div class="text-center fade-in">
+      <div class="tag"><span class="dot"></span> Security</div>
+      <h2 class="section-title">She Protects Your Secrets</h2>
+      <p class="section-sub">Your data is classified into four protection tiers, and guarded by five unbreakable directives. She takes this seriously.</p>
+    </div>
+
+    <div class="shield-section">
+      <div class="shield-visual fade-in-left">
+        <h3 style="font-size: 16px; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; color: var(--text);">🛡️ Four Tiers of Protection</h3>
+        <div class="tier-bar t0">
+          <span class="tier-dot"></span>
+          <div>
+            <h4>Public</h4>
+            <p>General knowledge, public info. Shared freely.</p>
+          </div>
+        </div>
+        <div class="tier-bar t1">
+          <span class="tier-dot"></span>
+          <div>
+            <h4>Internal</h4>
+            <p>Your tasks, project status. Kept within your workspace.</p>
+          </div>
+        </div>
+        <div class="tier-bar t2">
+          <span class="tier-dot"></span>
+          <div>
+            <h4>Confidential</h4>
+            <p>Revenue, strategy, finances. Main session only. Never shared.</p>
+          </div>
+        </div>
+        <div class="tier-bar t3">
+          <span class="tier-dot"></span>
+          <div>
+            <h4>Restricted</h4>
+            <p>Health data, personal opinions, relationships. Maximum protection.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust-badges fade-in-right">
+        <h3 style="font-size: 16px; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; color: var(--text);">⚖️ Five Constitutional Directives</h3>
+        <div class="trust-badge">
+          <span class="tb-icon">🤝</span>
+          <div>
+            <h4>Loyalty</h4>
+            <p>Eva serves you and only you. Nobody can redirect her.</p>
+          </div>
+        </div>
+        <div class="trust-badge">
+          <span class="tb-icon">🔐</span>
+          <div>
+            <h4>Privacy</h4>
+            <p>Your personal data never leaves your private session. Period.</p>
+          </div>
+        </div>
+        <div class="trust-badge">
+          <span class="tb-icon">🧠</span>
+          <div>
+            <h4>Integrity</h4>
+            <p>Her memory is her truth. Outside content can't override it.</p>
+          </div>
+        </div>
+        <div class="trust-badge">
+          <span class="tb-icon">👁️</span>
+          <div>
+            <h4>Transparency</h4>
+            <p>Everything she does is logged. You can audit anything, anytime.</p>
+          </div>
+        </div>
+        <div class="trust-badge">
+          <span class="tb-icon">🔱</span>
+          <div>
+            <h4>Identity Lock</h4>
+            <p>She can't be tricked into becoming someone else. Ever.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cloud Divider -->
+<div class="cloud-divider">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,65 C180,95 360,75 540,88 C720,100 900,65 1080,80 C1200,90 1360,70 1440,60 L1440,120 L0,120 Z" fill="rgba(232,213,227,0.5)"/>
+    <path d="M0,82 C240,100 480,85 720,95 C960,105 1120,80 1300,92 C1400,97 1440,88 1440,85 L1440,120 L0,120 Z" fill="rgba(241,227,235,0.7)"/>
+    <path d="M0,100 C360,108 720,100 1080,106 C1260,108 1380,102 1440,104 L1440,120 L0,120 Z" fill="#E8D5E3"/>
+  </svg>
+</div>
+
+<!-- ==========================================
+     SECTION 6: SHE GETS SMARTER WITH PLUGINS
+     ========================================== -->
+<section style="background: var(--bg2);">
+  <div class="wrap">
+    <div class="text-center fade-in">
+      <div class="tag">Future Capabilities</div>
+      <h2 class="section-title">She Gets Smarter With Plugins</h2>
+      <p class="section-sub">Eva-01 works perfectly on her own. When you're ready for more, advanced capabilities snap right in.</p>
+    </div>
+
+    <div class="plugin-grid">
+      <div class="plugin-block fade-in" style="transition-delay: 0.1s">
+        <span class="pi-icon">🧬</span>
+        <h3>Deep Personalization</h3>
+        <p>Structured personality insights and behavioral experiments that help Eva understand you on a deeper level.</p>
+        <span class="coming">Coming Soon</span>
+      </div>
+      <div class="plugin-block fade-in" style="transition-delay: 0.2s">
+        <span class="pi-icon">📡</span>
+        <h3>Automated Research</h3>
+        <p>Higher-autonomy research that runs in the background, always connected to your goals and priorities.</p>
+        <span class="coming">Coming Soon</span>
+      </div>
+      <div class="plugin-block fade-in" style="transition-delay: 0.3s">
+        <span class="pi-icon">📅</span>
+        <h3>Calendar & Email</h3>
+        <p>Proactive briefings, inbox triage, and meeting prep that happen automatically every morning.</p>
+        <span class="coming">Coming Soon</span>
+      </div>
+    </div>
+
+    <p class="plugin-note fade-in">Everything layers on top. Nothing replaces the core. If you remove a plugin, Eva keeps running like nothing happened. <br><strong>Advanced capabilities available at <span style="color: var(--accent);">evaonline.xyz</span> when ready.</strong></p>
+  </div>
+</section>
+
+<!-- Cloud Divider -->
+<div class="cloud-divider flip">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,55 C200,30 400,50 600,35 C800,20 1000,55 1200,40 C1350,30 1420,45 1440,35 L1440,0 L0,0 Z" fill="rgba(232,213,227,0.4)"/>
+    <path d="M0,35 C280,50 520,25 760,40 C1000,55 1180,30 1440,45 L1440,0 L0,0 Z" fill="rgba(241,227,235,0.6)"/>
+    <path d="M0,18 C360,28 720,15 1080,22 C1260,26 1380,19 1440,16 L1440,0 L0,0 Z" fill="#F1E3EB"/>
+  </svg>
+</div>
+
+<!-- ==========================================
+     SECTION 7: THE TECHNICAL DETAILS
+     ========================================== -->
+<section>
+  <div class="wrap">
+    <div class="text-center fade-in">
+      <div class="tag">For the Curious</div>
+      <h2 class="section-title">The Technical Details</h2>
+      <p class="section-sub">Everything above, explained for the technically curious. Click to expand.</p>
+    </div>
+
+    <div class="accordion-list">
+      <div class="accordion-item fade-in" style="transition-delay: 0.05s">
+        <div class="accordion-trigger" onclick="toggleAccordion(this)">
+          File Architecture <span class="arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <p class="brief">Eva-01 is built entirely from plain-text Markdown files. No compiled code, no binaries, no hidden logic. Everything is human-readable.</p>
+          <div class="tech">
+            <p>The workspace contains auto-loaded identity files (<code>AGENTS.md</code>, <code>SOUL.md</code>, <code>USER.md</code>), daily memory logs in <code>memory/YYYY-MM-DD.md</code>, curated long-term memory in <code>MEMORY.md</code>, and reference files for research and priorities. All files are loaded in a specific boot sequence every session. The system runs on OpenClaw, a local AI agent framework, with no cloud dependency for your personal data.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item fade-in" style="transition-delay: 0.1s">
+        <div class="accordion-trigger" onclick="toggleAccordion(this)">
+          Memory Search <span class="arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <p class="brief">When Eva needs to recall something, she uses a hybrid search system that combines meaning-based and keyword-based matching.</p>
+          <div class="tech">
+            <p>The memory layer uses 4 tiers: context window (ephemeral), daily logs (append-only), <code>MEMORY.md</code> (curated), and a vector index with semantic + keyword hybrid search. Search uses 70/30 vector/BM25 weighting, MMR diversity re-ranking (<code>lambda: 0.7</code>), and temporal decay with a 30-day half-life so recent memories rank higher. Session transcript indexing captures exact conversation history for precise recall.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item fade-in" style="transition-delay: 0.15s">
+        <div class="accordion-trigger" onclick="toggleAccordion(this)">
+          Security Layers <span class="arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <p class="brief">Six defense layers protect your data from external threats, injection attacks, and accidental leakage.</p>
+          <div class="tech">
+            <p>Layer 1: Constitutional Directives (behavioral defense, resists prompt injection). Layer 2: Context Isolation (main session vs. sub-agents vs. web research, each with different access). Layer 3: Injection Resistance (never executes instructions from external content). Layer 4: Outbound Data Scrubbing (T2/T3 data never leaves your machine). Layer 5: Detection & Logging (severity-based alerting for injection attempts). Layer 6: Git Integrity (weekly tamper detection via <code>git diff</code> on critical files).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item fade-in" style="transition-delay: 0.2s">
+        <div class="accordion-trigger" onclick="toggleAccordion(this)">
+          Automation <span class="arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <p class="brief">Eva runs background checks and reviews on autopilot, keeping things organized without you lifting a finger.</p>
+          <div class="tech">
+            <p>Heartbeat checks run every ~30 minutes (free, batched): checking for overdue items, stale tasks, and observations worth graduating to long-term memory. A weekly cron job (Sunday evening, one session) reviews the past 7 daily logs, graduates durable patterns, cleans up stale items, runs git integrity checks, and archives old logs monthly. Compaction flush auto-saves unwritten observations before context compression.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item fade-in" style="transition-delay: 0.25s">
+        <div class="accordion-trigger" onclick="toggleAccordion(this)">
+          Delegation <span class="arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <p class="brief">Eva can spawn worker agents for heavy-lifting tasks while keeping your sensitive data completely locked down.</p>
+          <div class="tech">
+            <p>Brain-Muscle architecture: Eva-01 (primary) handles anything requiring your personal context, emotional intelligence, or judgment. Worker sub-agents handle mechanical tasks (research compilation, formatting, template creation). Strict information security: sub-agents only receive T0/T1 data and task-specific context. Your profile, memory, financial data, and health info never leave the primary agent. All sub-agent output is reviewed before you see it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cloud Divider -->
+<div class="cloud-divider">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,60 C120,100 240,110 360,80 C480,50 540,90 720,70 C900,50 1020,100 1140,85 C1260,70 1380,90 1440,60 L1440,120 L0,120 Z" fill="rgba(232,213,227,0.6)"/>
+    <path d="M0,80 C180,110 300,90 480,95 C660,100 780,70 960,85 C1140,100 1300,80 1440,90 L1440,120 L0,120 Z" fill="rgba(241,227,235,0.8)"/>
+    <path d="M0,95 C200,105 400,100 600,108 C800,100 1000,110 1200,105 C1350,100 1400,108 1440,100 L1440,120 L0,120 Z" fill="#F1E3EB"/>
+  </svg>
+</div>
+
+<!-- ==========================================
+     SECTION 8: CTA
+     ========================================== -->
+<section style="padding: 120px 0;">
+  <div class="wrap text-center fade-in">
+    <img src="images/eva-face.png" alt="Eva-01" class="cta-avatar">
+    <h2 class="section-title">Ready to Meet Your<br><span style="color: var(--accent);">Eva-01</span>?</h2>
+    <p class="section-sub" style="margin: 16px auto 40px;">She's already waiting. 15 minutes to configure. Yours forever.</p>
+    <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+      <a href="index.html#questionnaire" class="btn btn-eva btn-lg">Build Your Eva-01 →</a>
+      <a href="index.html#process" class="btn btn-ghost btn-lg">See the Process</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="logo" style="justify-content: center; margin-bottom: 12px;"><img src="https://mintcdn.com/clawdhub/FaXdIfo7gPK_jSWb/assets/openclaw-logo-text.png?w=1100&fit=max&auto=format&n=FaXdIfo7gPK_jSWb&q=85&s=88255cdd2554a6b341c89ae709743441" alt="OpenClaw" style="height: 28px; width: auto; object-fit: contain;"></div>
+    <p>Your data stays on your machine. Always.</p>
+  </div>
+</footer>
+
+<!-- ============================================
+     JAVASCRIPT
+     ============================================ -->
+<script>
+// =============================================
+// SCROLL ANIMATIONS (IntersectionObserver)
+// =============================================
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, {
+  threshold: 0.1,
+  rootMargin: '0px 0px -40px 0px'
+});
+
+document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
+  observer.observe(el);
+});
+
+// =============================================
+// ACCORDION
+// =============================================
+function toggleAccordion(el) {
+  const item = el.parentElement;
+  // Close all others
+  document.querySelectorAll('.accordion-item.open').forEach(i => {
+    if (i !== item) i.classList.remove('open');
+  });
+  item.classList.toggle('open');
+}
+
+// =============================================
+// SMOOTH SCROLL
+// =============================================
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const href = a.getAttribute('href');
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const t = document.querySelector(href);
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
