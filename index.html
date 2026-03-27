@@ -5976,6 +5976,8 @@ async function generateAndDownload() {
 // SMOOTH SCROLL
 // =============================================
 document.querySelectorAll('a[href^="#"]').forEach(a => {
+  // Skip bare "#" links (buttons like Next/Back/Skip use href="#" with onclick handlers)
+  if (a.getAttribute('href') === '#') return;
   a.addEventListener('click', e => {
     e.preventDefault();
     const t = document.querySelector(a.getAttribute('href'));
