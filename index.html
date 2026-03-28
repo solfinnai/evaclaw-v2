@@ -1102,6 +1102,7 @@ footer .logo { justify-content: center; margin-bottom: 12px; }
     <div class="logo"><img src="images/logo.svg" alt="Eva" style="width:36px;height:auto;"> EVA ONLINE</div>
     <div class="nav-links">
       <a href="how-it-works.html">How The Magic Works</a>
+      <a href="install.html">How to Install</a>
       <a href="#process">How It Works</a>
       <a href="#faq">FAQ</a>
       <a href="#questionnaire" class="nav-cta">Meet Eva-01</a>
@@ -3765,9 +3766,55 @@ Welcome! This guide gets you from zero to a working AI Chief of Staff in about 1
 - A computer (Mac, Windows, or Linux)
 - An internet connection
 - Node.js 22 or newer installed (Node 24 recommended) — download from https://nodejs.org
-- An API key from Anthropic (Claude), OpenAI, or another supported provider
+- An account with a supported AI provider (Anthropic Claude or OpenAI) — see Step 1 below
 
-## Step 1: Install OpenClaw
+## Step 1: Set Up Your AI Provider
+
+Eva-01 works with **Anthropic Claude** (default) or **OpenAI**. You need credentials from at least one provider.
+
+### Option A: API Key (Recommended)
+
+An API key gives you pay-as-you-go access. This is the safest and most reliable method.
+
+**For Claude (Anthropic):**
+1. Go to [platform.claude.com](https://platform.claude.com) and create an account (or sign in)
+2. Set up billing (pay-as-you-go)
+3. Go to **Settings > API Keys** and click **Create Key**
+4. Name it something like \`eva-01\` and copy the key immediately — you won't see it again
+
+**For OpenAI:**
+1. Go to [platform.openai.com](https://platform.openai.com) and create an account (or sign in) — this is separate from your ChatGPT account
+2. Set up billing under **Settings > Billing**
+3. Go to **API Keys** and click **Create new secret key**
+4. Name it and copy it immediately — you won't see it again
+
+### Option B: OAuth / Subscription Token (Uses Your Existing Subscription)
+
+If you already pay for a Claude or OpenAI subscription, you can use that instead of paying separately for API access.
+
+**For OpenAI (ChatGPT Plus/Pro):**
+OpenAI's OAuth flow is built into the OpenClaw setup wizard. When you run \`openclaw onboard\` in Step 2, select the browser-based login option. It opens your browser, you sign in with your ChatGPT account, and you're done.
+
+**For Claude (Pro/Max subscription):**
+Claude requires an extra step — you need to generate a setup-token using the Claude Code CLI:
+
+1. Install Claude Code if you haven't:
+   \`\`\`
+   npm install -g @anthropic-ai/claude-code
+   \`\`\`
+2. Run the token generator:
+   \`\`\`
+   claude setup-token
+   \`\`\`
+3. A browser window opens — sign in with your Claude account and authorize
+4. The token appears in your terminal (starts with \`sk-ant-oat01-\`). Copy it.
+5. When running \`openclaw onboard\` in Step 2, paste this token when asked for your Anthropic credential
+
+> **Warning — ToS Risk:** In February 2026, Anthropic updated its terms to ban third-party tools from using subscription OAuth tokens. The \`claude setup-token\` flow still works technically, but using it with OpenClaw may violate Anthropic's Terms of Service. Your account could be restricted. If you're not comfortable with this risk, use an API key (Option A) instead. This is your choice.
+
+---
+
+## Step 2: Install OpenClaw
 
 Open your Terminal (Mac/Linux) or PowerShell (Windows) and run:
 
@@ -3775,7 +3822,7 @@ Open your Terminal (Mac/Linux) or PowerShell (Windows) and run:
 npm install -g openclaw@2026.3.24
 \`\`\`
 
-**Why a specific version?** Eva-01 v4.3 is tested against OpenClaw v2026.3.24. Using \`@latest\` may pull a newer version with breaking changes. See \`shipping/COMPATIBILITY.md\` for the tested version range. You can update later once you've verified compatibility.
+**Why a specific version?** Eva-01 v4.3 is tested against OpenClaw v2026.3.24. Using \`@latest\` may pull a newer version with breaking changes. You can update later once you've verified compatibility.
 
 Then run the setup wizard:
 
@@ -3783,7 +3830,7 @@ Then run the setup wizard:
 openclaw onboard --install-daemon
 \`\`\`
 
-The wizard walks you through everything: API keys, connecting a chat channel (Telegram, Discord, WhatsApp, etc.), and starting the background daemon. Follow the prompts.
+The wizard walks you through everything: connecting your AI provider (paste your API key or token when prompted), connecting a chat channel (Telegram, Discord, WhatsApp, etc.), and starting the background daemon. Follow the prompts.
 
 When it asks about your workspace, note the path it gives you. By default this is \`~/.openclaw/workspace/\`. You'll need it for the next step.
 
@@ -3797,25 +3844,23 @@ openclaw config set heartbeat.interval "2h"
 
 You can always tighten it later. See \`docs/ADVANCED-CONFIG.md\` for all heartbeat options.
 
-## Step 2: Install the Blueprint
+## Step 3: Install the Blueprint
 
 Copy all the files from this blueprint folder into your OpenClaw workspace folder:
 
 **Mac/Linux:**
 \`\`\`
-cp -r ./v4.3/* ~/.openclaw/workspace/
+cp -r ./eva-01-assistant/* ~/.openclaw/workspace/
 \`\`\`
 
 **Windows (PowerShell):**
 \`\`\`
-Copy-Item -Path .\\v4.3\\* -Destination ~\\.openclaw\\workspace\\ -Recurse
+Copy-Item -Path .\eva-01-assistant\* -Destination ~\.openclaw\workspace\ -Recurse
 \`\`\`
 
 If your workspace is in a different location (the onboard wizard told you where), use that path instead.
 
-**Container mode:** If running \`openclaw --container\`, copy files to the mounted workspace path instead.
-
-## Step 3: Configure OpenClaw for Eva-01
+## Step 4: Configure OpenClaw for Eva-01
 
 Eva-01 ships with \`openclaw.json\` — a configuration file with recommended settings (model, heartbeat interval). When you copied the blueprint files into your workspace, this was included automatically.
 
@@ -3823,318 +3868,237 @@ Eva-01 ships with \`openclaw.json\` — a configuration file with recommended se
 \`\`\`bash
 cp ~/.openclaw/openclaw.json ~/.openclaw/openclaw.json.backup
 \`\`\`
-Compare the shipped \`openclaw.json\` against yours. The key settings are \`model.primary\` (anthropic/claude-sonnet-4-6) and \`heartbeat.every\` ("2h"). Merge what makes sense — don't blindly replace, as your existing config has auth, channel, and plugin settings you'll lose.
+
+**If you're using OpenAI instead of Claude:** Change the model in \`openclaw.json\`:
+\`\`\`json
+"primary": "openai/gpt-4o"
+\`\`\`
 
 **At minimum, verify these settings in your \`openclaw.json\`:**
-- Your model provider and API key are configured
+- Your AI provider credentials are configured (API key or token from Step 1)
 - \`heartbeat.every\` is set to \`"2h"\` (not the default \`"30m"\`)
 
-**Note on auto-injection:** Some OpenClaw versions support \`boot-md\` and \`bootstrap-extra-files\` config keys that auto-load files at session start. If your version supports them, add \`"boot-md": "SOUL.md"\` and a \`"bootstrap-extra-files"\` array to your config. If your version doesn't (the gateway rejects unknown keys), skip them — Eva-01 will detect this and load files manually instead. Both modes work.
+See \`docs/ADVANCED-CONFIG.md\` for all optional settings.
 
-See \`docs/ADVANCED-CONFIG.md\` for all optional settings (routing, memory search, filesystem policy, hooks, MCP bridges).
-
-## Step 4: Fill Out Your Profile
+## Step 5: Fill Out Your Profile
 
 Open these two files in any text editor and fill them out:
 
 1. **USER.md** — Everything about you. The more detail you provide, the better Eva-01 knows you. At minimum, fill in your name, role, and communication preferences.
 
-2. **SOUL.md** — Eva-01's personality. The defaults are solid (including the Handling Manual), but customize anything that doesn't match how you want your agent to respond.
+2. **SOUL.md** — Eva-01's personality. The defaults are solid, but customize anything that doesn't match how you want your agent to respond.
 
-## Step 5: Start Talking
+## Step 6: Start Talking
 
 Open your chat channel (Telegram, Discord, whatever you connected during onboard) and send Eva-01 a message. Say hello.
 
 On first contact, Eva-01 reads BOOTSTRAP.md and sets herself up automatically:
 - Checks environment (git availability, workspace permissions)
 - Learns your name from USER.md
-- Personalizes her security directives (replaces \`{{OWNER_LEGAL_NAME}}\` in AGENTS.md)
-- Verifies the replacement worked (safety check)
+- Personalizes her security directives
 - Initializes version control for your workspace (if git is available)
 - Creates her first daily log
-- Verifies private notes and security log files exist
 - Sets up the weekly memory review
 - Introduces herself
-- Renames BOOTSTRAP.md to BOOTSTRAP.md.completed (preserved for reference)
 
 After that, Eva-01 is fully operational.
 
-## What to Expect
-
-Eva-01's core files (SOUL.md, AGENTS.md, USER.md, MEMORY.md, IDENTITY.md, TOOLS.md) are auto-loaded by OpenClaw every session. She'll know your name, your priorities, and your communication style from the first message.
-
-The more you talk to her, the smarter she gets. She writes general observations to MEMORY.md (visible in all sessions), sensitive observations to memory/private-notes.md (private to direct chats), and raw logs to daily files.
-
-## Customize
-
-- Edit **SOUL.md** to change her personality and voice
-- Edit **USER.md** to update your profile as things change
-- Edit **CURRENT-PRIORITIES.md** weekly to keep her focused
-- Edit **INTEGRATIONS.md** to set up external tools and MCP bridges
-- **MEMORY.md** and **memory/private-notes.md** grow on their own as she learns about you
-
 ## Troubleshooting
 
-**Agent doesn't seem to know who it is?**
-Check your \`openclaw.json\` and make sure your model and heartbeat settings are correct. Eva-01 detects whether auto-injection is active and loads files manually if needed — the config doesn't have to be perfect.
+**Agent doesn't respond?**
+Check your \`openclaw.json\` and make sure your model and auth credentials are correct.
 
 **Agent didn't run BOOTSTRAP.md?**
-Send this message: "Read BOOTSTRAP.md in your workspace and follow the instructions."
+Send: "Read BOOTSTRAP.md in your workspace and follow the instructions."
 
-**AGENTS.md still has \`{{OWNER_LEGAL_NAME}}\` placeholders?**
-Bootstrap may have failed partially. Tell your agent: "Check the Constitutional Directives in AGENTS.md. Replace every \`{{OWNER_LEGAL_NAME}}\` with my actual name: [your name]."
-
-**Files not auto-loading?**
-Eva-01 loads core files (SOUL.md, USER.md, MEMORY.md, etc.) either via auto-injection or manually at session start. If she seems to have no context, try sending: "Read SOUL.md and USER.md, then greet me."
+**Authentication errors?**
+- If using an API key: verify it's correctly set in your config. Check that billing is active.
+- If using a Claude setup-token: your token may have expired. Run \`claude setup-token\` again.
+- If using OpenAI OAuth: try \`openclaw logout\` then \`openclaw onboard\` to re-authenticate.
 
 **Need to start over?**
-If BOOTSTRAP.md.completed exists, rename it back to BOOTSTRAP.md and tell the agent to re-run setup. Your workspace has git version control (if git was available), so you can also \`git log\` to see checkpoints and restore any previous state.
+If BOOTSTRAP.md.completed exists, rename it back to BOOTSTRAP.md and tell the agent to re-run setup.
 
 ## Need Help?
 
 Visit **evaonline.xyz** for guides, advanced plugins, and support.`,
 
-  'shipping/HOW-TO-UPGRADE.md': `# How to Upgrade Your Agent (For Humans)
+  'shipping/HOW-TO-UPGRADE.md': `# Installing Eva-01 on an Existing OpenClaw Agent
 
-Your agent just got a major upgrade. This guide walks you through installing it in about 5 minutes. Your agent does all the hard work. You just need to hand it the files and tell it to go.
+Already running an OpenClaw agent? This guide walks you through adding Eva-01 on top of your existing setup without losing any of your data — memories, daily logs, projects, config, all of it stays safe.
 
-**What stays safe:** All your personal stuff (your profile, memories, daily logs, priorities, projects) is untouched. The upgrade only changes the "operating system" your agent runs on, not any of your personal data.
-
-**What changes (v4.2 → v4.3):**
-- Fixed: BOOTSTRAP.md no longer uses \`git add -A\` (explicit file paths now, consistent with security guidance)
-- Fixed: \`openclaw.json\` ships as ready-to-use config (was \`openclaw.json.example\`)
-- Fixed: SOUL.md no longer duplicates file-loading rules from AGENTS.md
-- Fixed: \`memory/heartbeat-state.json\` now initialized during bootstrap
-- Fixed: Weekly review cron command is now explicit in BOOTSTRAP.md
-- Fixed: Sliding window correctly documented as OpenClaw-managed (not agent self-enforced)
-- Removed: Delegation ("Brain-Muscle") section (will return when OpenClaw ships multi-agent)
-- Added: Heartbeat skip-if-nothing-due logic (reduces wasted API calls)
-- Added: Research Autonomy Level 1 (quick searches auto-approved)
-- Added: Future risk tracking in shipping/COMPATIBILITY.md (agent OS direction, sandbox readiness)
-- Added: AGENTS-REFERENCE.md (extended rules split from AGENTS.md for lighter context)
-- Added: FIRST-PROMPTS.md guided onboarding walkthrough in shipping/
+**Time:** About 10 minutes. Your agent does the heavy lifting.
 
 ---
 
-## Step 0: Back Up Your Current Agent First
+## Before You Start
 
-Before you upgrade anything, make a full backup of your agent as it is right now. That way, no matter what happens, you have a complete snapshot you can restore from.
+Make sure you have:
+- A working OpenClaw agent (any version)
+- Your Eva-01 download package (from evaonline.xyz)
+- Access to your chat channel (Telegram, Discord, etc.)
 
-Open a chat with your agent and send this:
+**What gets replaced:** Eva-01's framework files (operating rules, personality template, heartbeat logic, security directives). These are new files your agent doesn't have yet.
+
+**What stays untouched:** Everything personal — your memories, daily logs, projects, custom configs, channel settings, API credentials, and anything you've built. Eva-01 adds structure on top of your existing agent. It doesn't delete anything.
 
 ---
 
-> **COPY/PASTE PROMPT 0 — Full backup before upgrade:**
+## Step 1: Back Up Your Current Agent
+
+Before anything else, make a full snapshot. Open a chat with your current agent and send:
+
+> **COPY/PASTE PROMPT 1 — Full backup:**
 
 \`\`\`
 Before we do anything, I need a complete backup of my current agent.
 
 1. Detect my operating system and use the appropriate backup location:
-   - Mac: ~/Desktop/eva-backup-YYYY-MM-DD.zip
-   - Windows: %USERPROFILE%\\Desktop\\eva-backup-YYYY-MM-DD.zip
-   - Linux: ~/Desktop/eva-backup-YYYY-MM-DD.zip (or ~/eva-backup-YYYY-MM-DD.zip if no Desktop)
+   - Mac: ~/Desktop/agent-backup-YYYY-MM-DD.zip
+   - Windows: %USERPROFILE%\Desktop\agent-backup-YYYY-MM-DD.zip
+   - Linux: ~/Desktop/agent-backup-YYYY-MM-DD.zip (or ~/agent-backup-YYYY-MM-DD.zip if no Desktop)
 2. Create a zip file of my entire ~/.openclaw/workspace/ folder
-3. Name it: eva-backup-YYYY-MM-DD.zip (use today's actual date)
+3. Name it: agent-backup-YYYY-MM-DD.zip (use today's actual date)
 4. Save it to my Desktop using the path above
-5. After creating it, tell me the file size and confirm it includes all my files (USER.md, MEMORY.md, SOUL.md, AGENTS.md, daily logs, docs, everything)
-6. Suggest I copy it to cloud storage (iCloud, Google Drive, OneDrive, Dropbox — whatever I have) for safekeeping
+5. After creating it, tell me the file size and confirm it includes all my files
+6. Suggest I copy it to cloud storage (iCloud, Google Drive, OneDrive, Dropbox) for safekeeping
 7. Confirm when done
 \`\`\`
 
----
-
-Wait for your agent to confirm the backup is created. Then check your Desktop and make sure the zip file is there. Once you see it, move on to Step 1.
-
-**Why this matters:** This backup is your safety net. If the upgrade goes sideways, if you accidentally delete something in a month, if you get a new computer, this zip has everything. Your personality, your memories, your daily logs, your projects, all of it. One file, fully portable.
+Wait for confirmation. Check your Desktop for the zip. Once you see it, move on.
 
 ---
 
-## Step 1: Download the Upgrade
+## Step 2: Install the Eva-01 Files
 
-Download the upgrade package from [evaonline.xyz](https://evaonline.xyz).
+Tell your agent where the download is and let it handle the install:
 
-You'll get a folder called \`v4.3/\` with the upgrade files inside. Remember where you saved it.
-
----
-
-## Step 2: Give Your Agent the Upgrade
-
-Open a chat with your agent (Telegram, Discord, or however you normally talk to it) and send this message:
-
----
-
-> **COPY/PASTE PROMPT 1 — Start the upgrade:**
+> **COPY/PASTE PROMPT 2 — Install Eva-01:**
 
 \`\`\`
-I have an Eva-01 v4.3 upgrade package. The upgrade folder is at: [REPLACE THIS WITH YOUR PATH, e.g., ~/Downloads/v4.3/]
+I want to install Eva-01, an AI Chief of Staff blueprint, on top of my existing agent. The Eva-01 files are at: [REPLACE THIS WITH YOUR PATH, e.g., ~/Downloads/eva-01-assistant/]
 
 Here's what I need you to do:
 
-1. First, create a git checkpoint (if git is available): git add AGENTS.md AGENTS-REFERENCE.md SOUL.md HEARTBEAT.md BOOTSTRAP.md RESEARCH.md openclaw.json memory/cron-weekly-review.md docs/ADVANCED-CONFIG.md && git commit -m "pre-upgrade-v4.3 checkpoint"
-2. The upgrade folder has updated versions of framework files
-3. For these files, REPLACE my versions with the new ones:
-   - AGENTS.md, AGENTS-REFERENCE.md, HEARTBEAT.md, RESEARCH.md, BOOTSTRAP.md
-   - openclaw.json
-   - memory/cron-weekly-review.md
+1. First, if git is available, create a safety checkpoint:
+   git add -A && git commit -m "pre-eva-01-install checkpoint"
+
+2. Copy these NEW files into my workspace (these don't exist yet, so nothing gets overwritten):
+   - AGENTS.md, AGENTS-REFERENCE.md, SOUL.md, HEARTBEAT.md, BOOTSTRAP.md
+   - RESEARCH.md, INTEGRATIONS.md, IDENTITY.md, TOOLS.md
+   - CURRENT-PRIORITIES.md, GAME-OF-LIFE.md
+   - openclaw.json (but see note below about merging)
    - docs/ADVANCED-CONFIG.md
-4. For SOUL.md: merge carefully — keep my personality customizations (especially the Handling Manual if I customized it), update the Continuity section (it now references AGENTS.md instead of duplicating file lists)
-5. DO NOT touch: USER.md, MEMORY.md, CURRENT-PRIORITIES.md, GAME-OF-LIFE.md, IDENTITY.md, INTEGRATIONS.md, or anything in memory/*.md (except cron-weekly-review.md)
-6. Create memory/heartbeat-state.json if it doesn't exist: {"lastChecks": {}, "heartbeatCount": 0, "lastSubstantiveCheck": null, "lastWeeklyReview": null}
-7. In AGENTS.md, replace {{OWNER_LEGAL_NAME}} with my actual name in the Constitutional Directives (same name as v4.2 had)
-8. After upgrading (if git is available): git add AGENTS.md AGENTS-REFERENCE.md SOUL.md HEARTBEAT.md BOOTSTRAP.md RESEARCH.md openclaw.json memory/cron-weekly-review.md memory/heartbeat-state.json docs/ADVANCED-CONFIG.md && git commit -m "upgraded to eva-01 v4.3"
-9. Walk me through what you changed
+   - memory/cron-weekly-review.md, memory/inbox.md, memory/private-notes.md
+   - memory/security-log.md, memory/heartbeat-state.json
+
+3. IMPORTANT — openclaw.json: Do NOT blindly replace my existing config. Instead:
+   - Back up my current openclaw.json first
+   - Compare the Eva-01 version against mine
+   - Keep my existing auth, channel, and plugin settings
+   - Merge in Eva-01's recommended settings: model.primary and heartbeat.every ("2h")
+   - If I don't have a heartbeat config yet, add the Eva-01 one
+
+4. If I already have any of these files (MEMORY.md, USER.md, daily logs, etc.), DO NOT overwrite them
+
+5. If I DON'T have a USER.md yet, copy the Eva-01 template so I can fill it out
+
+6. Walk me through what you installed and what you skipped
 \`\`\`
 
-**Important:** Replace the path in the first line with wherever you actually saved the v4.3 folder!
+**Important:** Replace the path in the first line with wherever you saved the Eva-01 download.
 
 ---
 
-## Step 3: Verify Everything Looks Good
+## Step 3: Fill Out Your Profile
 
-Once your agent says it's done, send this:
+If you didn't already have a USER.md, open it and fill it out. At minimum: your name, role, and communication preferences.
+
+Also review **SOUL.md** — this controls Eva-01's personality. The defaults are solid, but customize anything that doesn't fit.
 
 ---
 
-> **COPY/PASTE PROMPT 2 — Verify the upgrade:**
+## Step 4: Run Bootstrap
+
+Eva-01 needs a one-time setup. Send this:
+
+> **COPY/PASTE PROMPT 3 — Run bootstrap:**
 
 \`\`\`
-Upgrade looks done. Let's verify:
+I just installed Eva-01 files in my workspace. Please read BOOTSTRAP.md and follow the setup instructions. This is a first-time install.
+\`\`\`
 
-1. Read my USER.md and confirm my personal info is still there and unchanged
-2. Read my MEMORY.md and confirm my memories are still there and unchanged
-3. Read AGENTS.md and confirm my name appears correctly in the Constitutional Directives (all 3 locations — should NOT say {{OWNER_LEGAL_NAME}})
-4. Confirm memory/private-notes.md exists and is unchanged
+Eva-01 will learn your name, personalize security directives, initialize version control, create her first daily log, and introduce herself.
+
+---
+
+## Step 5: Verify Everything
+
+> **COPY/PASTE PROMPT 4 — Verify install:**
+
+\`\`\`
+Eva-01 is installed. Let's verify everything:
+
+1. Read USER.md and confirm my info is there
+2. Read MEMORY.md and confirm my existing memories are intact
+3. Read AGENTS.md and confirm my name appears in the Constitutional Directives (all 3 locations)
+4. Confirm memory/private-notes.md exists
 5. Confirm memory/security-log.md exists
-6. Confirm memory/heartbeat-state.json exists (new in v4.3)
-7. Confirm shipping/COMPATIBILITY.md has BLUEPRINT_VERSION=4.3
-8. Confirm openclaw.json is valid JSON and uses \`"every": "2h"\` (not \`"interval"\`)
-9. Check that my daily logs in memory/ are all still there
-10. Confirm the Delegation section is gone from AGENTS.md (removed in v4.3)
-11. Tell me what version we're now running (should be v4.3)
+6. Confirm memory/heartbeat-state.json exists
+7. Confirm openclaw.json is valid JSON with heartbeat set to "every": "2h"
+8. Check that my existing daily logs are still there
+9. Tell me what version we're running
 
-If anything looks wrong, tell me and we'll roll it back.
+If anything looks wrong, tell me before we go further.
 \`\`\`
 
 ---
 
-## Step 4: Configure OpenClaw (Optional but Recommended)
+## Done
 
-Eva-01 ships with \`openclaw.json\` — a ready-to-use configuration file. If you haven't customized your OpenClaw config yet, now is a good time:
-
----
-
-> **COPY/PASTE PROMPT 3 — Review config:**
-
-\`\`\`
-Read openclaw.json and compare it against my current ~/.openclaw/openclaw.json. Tell me:
-1. What settings I'm missing that Eva-01 recommends (model, heartbeat)
-2. What settings I have that conflict with the reference
-3. Whether my heartbeat is set to "every": "2h" (not "interval")
-
-Don't change anything yet — just tell me what you'd recommend.
-\`\`\`
-
----
-
-## Step 5: Done!
-
-If everything checks out, you're upgraded. Your agent is now running v4.3 with:
-- Ready-to-use \`openclaw.json\` (no more renaming from .example)
-- Fixed heartbeat config key (\`every\` instead of \`interval\`)
-- AGENTS.md split into core + AGENTS-REFERENCE.md (lighter context per session)
-- Heartbeat skip-if-nothing-due (fewer wasted API calls)
-- Simplified weekly review (5 steps instead of 11)
-- FIRST-PROMPTS.md guided onboarding walkthrough
-- Cleaner SOUL.md (no more duplicate file-loading rules)
-
-You don't need to do anything else. Your agent will start using the new features automatically.
+If everything checks out, Eva-01 is running on top of your existing agent. Read \`shipping/FIRST-PROMPTS.md\` for a guided first-session walkthrough.
 
 ---
 
 ## If Something Went Wrong
 
-Don't panic. Your agent created a backup before starting. Send this:
-
----
-
-> **COPY/PASTE PROMPT 4 — Roll back (only if needed):**
+> **COPY/PASTE — Roll back:**
 
 \`\`\`
-Something doesn't look right after the upgrade. Please roll back to the pre-upgrade checkpoint.
+Something doesn't look right. Let's roll back.
 
-Run: git log --oneline -5
-Find the commit that says "pre-upgrade-v4.3 checkpoint"
-Restore everything to that state
-Confirm when done
+If git is available:
+1. Run: git log --oneline -5
+2. Find the "pre-eva-01-install checkpoint" commit
+3. Restore to that state
+
+If git is NOT available:
+1. Unzip my backup (agent-backup-YYYY-MM-DD.zip from my Desktop) back into the workspace
 \`\`\`
-
----
-
-This will undo the entire upgrade and put everything back exactly how it was. You can then reach out to us at evaonline.xyz for help, or try the upgrade again.
 
 ---
 
 ## FAQ
 
-**Q: Will I lose my memories?**
-No. MEMORY.md, memory/private-notes.md, your daily logs, and everything in the memory/ folder is completely untouched.
+**Will I lose my memories?** No. Eva-01 never overwrites existing memory files.
 
-**Q: Will my agent's personality change?**
-No. SOUL.md personality traits, voice, and emotional handling are preserved. If you customized the Handling Manual, your customizations are kept.
+**I'm using OpenAI, not Claude. Does Eva-01 work?** Yes. Change the model in openclaw.json to your preferred provider.
 
-**Q: What if I customized AGENTS.md with my own rules?**
-Your custom rules should be preserved during the merge. If you added custom sections, tell your agent to keep them. The upgrade only updates framework sections.
+**What about my existing plugins and MCP bridges?** They stay. Eva-01 doesn't touch your plugin or MCP setup.
 
-**Q: Can I upgrade again later?**
-Yes. Each upgrade follows the same process. Download, paste the prompt, verify.
-
-**Q: What's the most important change in v4.3?**
-The heartbeat skip logic and valid JSON config. Your agent now skips empty heartbeats instantly instead of burning API calls, and the config file works out of the box without needing to strip comments.
-
----
-
-## Making Backups a Habit
-
-You don't just need backups before upgrades. Your agent learns something new about you every day. A backup from 3 months ago is missing 3 months of memories, preferences, and daily logs.
-
-We recommend backing up once a week (or whenever you feel like your agent has learned a lot of new stuff). You can do it anytime by sending this to your agent:
-
----
-
-> **COPY/PASTE PROMPT 5 — Anytime backup:**
-
-\`\`\`
-Please create a complete backup of my entire agent workspace right now.
-
-1. Detect my OS and use the appropriate Desktop path
-2. Create a zip file of the full ~/.openclaw/workspace/ folder
-3. Name it: eva-backup-YYYY-MM-DD.zip (use today's actual date)
-4. Save it to my Desktop
-5. After creating it, tell me the file size and confirm it includes all my files
-6. Suggest I copy it to cloud storage for safekeeping
-\`\`\`
-
----
-
-That's it. One prompt, full snapshot, timestamped on your desktop. Takes 30 seconds.
-
-**Pro tip:** If you want your agent to do this automatically, ask it to set up a weekly cron job that creates the backup every Sunday. That way you never have to think about it.
-
----
-
-That's it. You're done. Go talk to your upgraded agent.`,
+**Can I go back?** Yes. Restore from your backup zip.`,
 
   'shipping/README.md': `# Eva-01 — Your AI Chief of Staff (v4.3)
 
 This folder is Eva-01's brain. Every file shapes who she is, what she knows, and how she works.
 
-**Compatible with:** OpenClaw v2026.3.24+ (see \`shipping/COMPATIBILITY.md\` for tested range)
+**Compatible with:** OpenClaw v2026.3.24+
 **Reference config:** \`openclaw.json\`
 
 ## Quick Start
 
 **New to Eva-01?** -> Read \`INSTALL-GUIDE.md\`
-**Upgrading from v4.1?** -> Read \`HOW-TO-UPGRADE.md\`
+**Already have an OpenClaw agent?** -> Read \`HOW-TO-UPGRADE.md\`
 
 ## What's Inside
 
@@ -4169,14 +4133,13 @@ This folder is Eva-01's brain. Every file shapes who she is, what she knows, and
 | **memory/security-log.md** | Security event audit trail (injection attempts, directive conflicts) |
 | **memory/research/** | Research outputs when you ask her to look things up |
 
-### Shipping & Docs (for humans, not the agent)
+### Guides (for humans, not the agent)
 | File | What It Does |
 |------|-------------|
-| **shipping/COMPATIBILITY.md** | OpenClaw version tracking + breaking change matrix |
 | **shipping/INSTALL-GUIDE.md** | Getting started from scratch |
-| **shipping/HOW-TO-UPGRADE.md** | Upgrading from a previous version |
+| **shipping/HOW-TO-UPGRADE.md** | Installing Eva-01 on an existing OpenClaw agent |
 | **shipping/FIRST-PROMPTS.md** | Guided first-session walkthrough |
-| **shipping/CHANGELOG.md** | Version history |
+| **shipping/README.md** | This file |
 
 ## How It Works
 
@@ -4503,7 +4466,7 @@ Initial public release of EVA-01 blueprint. Established core architecture: works
 
 Make sure the following are true:
 
-- OpenClaw is installed and your API key is set (see \`INSTALL-GUIDE.md\` if not)
+- OpenClaw is installed and your AI provider is authenticated (see \`INSTALL-GUIDE.md\` if not)
 - Your Eva-01 files are in your workspace
 - Your \`openclaw.json\` is in the workspace root (not \`openclaw.json.example\`)
 - Your \`USER.md\` has your personalized information from the questionnaire
