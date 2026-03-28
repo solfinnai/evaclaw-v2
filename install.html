@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Install — Eva-01 | Eva Online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+/* =============================================
+   RESET & COLOR TOKENS - EVA ONLINE DESIGN
+   ============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #F1E3EB;
+  --bg2: #E8D5E3;
+  --text: #48333D;
+  --accent: #FF007A;
+  --accent-light: rgba(255, 0, 122, 0.1);
+  --online: #00ED27;
+  --dot-color: rgba(72, 51, 61, 0.1);
+  --card-bg: rgba(255, 255, 255, 0.35);
+  --card-border: rgba(255, 255, 255, 0.3);
+  --radius: 8px;
+  --radius-lg: 16px;
+  --font: 'Chakra Petch', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+.ph-duotone { color: var(--accent); }
+
+/* =============================================
+   INTERACTIVE DOT BACKGROUND
+   ============================================= */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* =============================================
+   LAYOUT
+   ============================================= */
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+.wrap-sm {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+section { padding: 100px 0; }
+.text-center { text-align: center; }
+
+/* =============================================
+   NAV
+   ============================================= */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  padding: 16px 24px;
+  background: var(--bg);
+  border-bottom: 1px solid rgba(72, 51, 61, 0.1);
+}
+nav .inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.nav-links {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+.nav-links a {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text);
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+.nav-links a.active { color: var(--accent); }
+.nav-cta {
+  padding: 10px 20px;
+  background: var(--accent);
+  color: white !important;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+}
+.nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* =============================================
+   BUTTONS
+   ============================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: var(--font);
+}
+.btn-eva {
+  background: var(--accent);
+  color: white;
+}
+.btn-eva:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 2px solid var(--text);
+}
+.btn-ghost:hover { background: rgba(72, 51, 61, 0.05); }
+.btn-lg { padding: 18px 36px; font-size: 17px; border-radius: var(--radius-lg); }
+
+/* =============================================
+   SECTION HEADERS
+   ============================================= */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  background: var(--accent-light);
+  border: 1px solid var(--accent);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.tag .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--online);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+h2.section-title {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.section-sub {
+  font-size: 16px;
+  color: var(--text);
+  max-width: 580px;
+  line-height: 1.7;
+}
+.text-center .section-sub { margin: 0 auto; }
+
+/* Cloud Divider */
+.cloud-divider {
+  position: relative;
+  height: 120px;
+  overflow: hidden;
+  background: transparent;
+  pointer-events: none;
+  z-index: 2;
+}
+.cloud-divider svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.cloud-divider.flip svg {
+  transform: scaleY(-1);
+  top: 0;
+  bottom: auto;
+}
+
+/* =============================================
+   SCROLL ANIMATIONS
+   ============================================= */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =============================================
+   HERO
+   ============================================= */
+.install-hero {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  padding-top: 100px;
+  padding-bottom: 40px;
+  position: relative;
+}
+.install-hero h1 {
+  font-size: clamp(38px, 5.5vw, 60px);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.05;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  color: var(--text);
+}
+.install-hero h1 .accent { color: var(--accent); }
+.install-hero .subtitle {
+  font-size: 19px;
+  color: var(--text);
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.hero-icon {
+  font-size: 72px;
+  margin-bottom: 24px;
+  display: block;
+  animation: orbFloat 6s ease-in-out infinite;
+}
+@keyframes orbFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+
+/* =============================================
+   PREREQ CARDS
+   ============================================= */
+.prereq-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+.prereq-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.prereq-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(255, 0, 122, 0.1);
+}
+.prereq-card i {
+  font-size: 36px;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: block;
+}
+.prereq-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.prereq-card p {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* =============================================
+   STEP CARDS
+   ============================================= */
+.step-section {
+  padding: 80px 0;
+}
+.step-section:nth-child(even) {
+  background: var(--bg2);
+}
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 36px;
+}
+.step-number {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(255, 0, 122, 0.3);
+}
+.step-header h2 {
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.1;
+  color: var(--text);
+}
+.step-body {
+  padding-left: 76px;
+}
+.step-body p {
+  font-size: 16px;
+  line-height: 1.75;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+.step-body p a {
+  color: var(--accent);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 0, 122, 0.3);
+  transition: border-color 0.2s;
+}
+.step-body p a:hover {
+  border-bottom-color: var(--accent);
+}
+
+/* Option Tabs */
+.option-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.option-tab {
+  padding: 10px 24px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 2px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font);
+}
+.option-tab.active,
+.option-tab:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  color: var(--accent);
+}
+.option-content {
+  display: none;
+}
+.option-content.active {
+  display: block;
+}
+
+/* Sub-options (Claude vs OpenAI) */
+.provider-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.provider-tab {
+  padding: 8px 18px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid rgba(72, 51, 61, 0.15);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font);
+}
+.provider-tab.active,
+.provider-tab:hover {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+.provider-content {
+  display: none;
+}
+.provider-content.active {
+  display: block;
+}
+
+/* Code Blocks */
+.code-block {
+  background: #2D1F26;
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 16px 0 24px;
+  overflow-x: auto;
+  position: relative;
+}
+.code-block code {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 14px;
+  color: #F1E3EB;
+  line-height: 1.7;
+  white-space: pre;
+}
+.code-block .comment { color: #8B7280; }
+.code-block .keyword { color: #FF007A; }
+.code-block .string { color: #00ED27; }
+.copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(241, 227, 235, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  font-family: var(--font);
+  transition: all 0.2s;
+}
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #F1E3EB;
+}
+
+/* Instruction List */
+.inst-list {
+  list-style: none;
+  margin: 16px 0 24px;
+  padding: 0;
+}
+.inst-list li {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  font-size: 15px;
+  line-height: 1.65;
+  border-bottom: 1px solid rgba(72, 51, 61, 0.08);
+  color: var(--text);
+}
+.inst-list li:last-child { border-bottom: none; }
+.inst-num {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Warning Box */
+.warning-box {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-left: 3px solid #F59E0B;
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 20px 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+}
+.warning-box strong {
+  color: #D97706;
+}
+
+/* Tip Box */
+.tip-box {
+  background: rgba(16, 185, 129, 0.06);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-left: 3px solid #10B981;
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 20px 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+}
+.tip-box strong {
+  color: #059669;
+}
+
+/* Info Box */
+.info-box {
+  background: rgba(59, 130, 246, 0.06);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-left: 3px solid #3B82F6;
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 20px 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+}
+.info-box strong {
+  color: #2563EB;
+}
+
+/* File Cards */
+.file-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 24px 0;
+}
+.file-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  transition: all 0.3s;
+}
+.file-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(255, 0, 122, 0.08);
+}
+.file-card h4 {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.file-card h4 i { color: var(--accent); font-size: 20px; }
+.file-card p {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text);
+  opacity: 0.85;
+}
+
+/* OS Tabs */
+.os-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.os-tab {
+  padding: 8px 18px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid rgba(72, 51, 61, 0.15);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font);
+}
+.os-tab.active,
+.os-tab:hover {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+.os-content {
+  display: none;
+}
+.os-content.active {
+  display: block;
+}
+
+/* =============================================
+   WHAT TO EXPECT / CUSTOMIZE
+   ============================================= */
+.expect-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+}
+.expect-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  transition: all 0.3s;
+}
+.expect-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 24px rgba(255, 0, 122, 0.08);
+}
+.expect-card i {
+  font-size: 32px;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: block;
+}
+.expect-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.expect-card p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.65;
+  opacity: 0.85;
+}
+
+/* =============================================
+   TROUBLESHOOTING ACCORDION
+   ============================================= */
+.accordion {
+  margin-top: 40px;
+}
+.accordion-item {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.accordion-item:hover {
+  box-shadow: 0 4px 16px rgba(255, 0, 122, 0.06);
+}
+.accordion-trigger {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 20px 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: left;
+  transition: color 0.2s;
+}
+.accordion-trigger:hover { color: var(--accent); }
+.accordion-trigger i {
+  font-size: 22px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.accordion-chevron {
+  margin-left: auto;
+  font-size: 18px;
+  transition: transform 0.3s;
+  color: var(--text);
+  opacity: 0.4;
+}
+.accordion-item.open .accordion-chevron {
+  transform: rotate(180deg);
+}
+.accordion-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+}
+.accordion-item.open .accordion-answer {
+  max-height: 500px;
+}
+.accordion-answer-inner {
+  padding: 0 24px 24px 60px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text);
+  opacity: 0.9;
+}
+.accordion-answer-inner code {
+  background: rgba(45, 31, 38, 0.08);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 13px;
+}
+
+/* =============================================
+   PROGRESS TRACKER (SIDEBAR)
+   ============================================= */
+.page-layout {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+}
+.progress-rail {
+  position: sticky;
+  top: 100px;
+  flex-shrink: 0;
+  width: 220px;
+  padding: 24px 0;
+}
+.progress-rail h4 {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.progress-rail a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  opacity: 0.5;
+  transition: all 0.2s;
+  border-left: 2px solid transparent;
+  padding-left: 16px;
+  margin-left: -2px;
+}
+.progress-rail a:hover,
+.progress-rail a.active {
+  opacity: 1;
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+.progress-rail .rail-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+.main-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* =============================================
+   TIME ESTIMATE
+   ============================================= */
+.time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #059669;
+  margin-top: 20px;
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+footer {
+  padding: 40px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text);
+  opacity: 0.6;
+  position: relative;
+  z-index: 1;
+}
+
+/* =============================================
+   MOBILE NAV
+   ============================================= */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--text);
+  font-size: 24px;
+  font-family: var(--font);
+  font-weight: 700;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 768px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    flex-direction: column;
+    padding: 20px 24px;
+    gap: 16px;
+    border-bottom: 1px solid rgba(72, 51, 61, 0.1);
+    box-shadow: 0 4px 12px rgba(72, 51, 61, 0.08);
+  }
+  .nav-links.open { display: flex; }
+  .prereq-grid { grid-template-columns: 1fr 1fr; }
+  .expect-grid { grid-template-columns: 1fr; }
+  .file-grid { grid-template-columns: 1fr; }
+  .step-body { padding-left: 0; }
+  .step-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  section { padding: 60px 0; }
+  .step-section { padding: 60px 0; }
+  .install-hero { min-height: auto; padding-top: 100px; padding-bottom: 40px; }
+  .cloud-divider { height: 60px; }
+  .page-layout { flex-direction: column; }
+  .progress-rail { display: none; }
+  .option-tabs { flex-wrap: wrap; }
+}
+@media (max-width: 480px) {
+  .prereq-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="inner">
+    <a href="index.html" class="logo"><img src="images/logo.svg" alt="Eva" style="width:36px;height:auto;"> EVA ONLINE</a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+    <div class="nav-links">
+      <a href="how-it-works.html">How The Magic Works</a>
+      <a href="install.html" class="active">How to Install</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#questionnaire" class="nav-cta">Meet Eva-01</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ==========================================
+     HERO
+     ========================================== -->
+<section class="install-hero">
+  <div class="wrap text-center">
+    <i class="ph-duotone ph-rocket-launch hero-icon"></i>
+    <h1>Get Eva-01<br><span class="accent">Up & Running</span></h1>
+    <p class="subtitle">From zero to a working AI Chief of Staff in about 10 minutes. Follow these six steps and you're live.</p>
+    <div class="time-badge">
+      <i class="ph-duotone ph-clock"></i> ~10 minutes to complete
+    </div>
+  </div>
+</section>
+
+<!-- CLOUD DIVIDER -->
+<div class="cloud-divider">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path d="M0,60 C360,120 720,0 1080,80 C1260,100 1380,40 1440,60 L1440,120 L0,120Z" fill="var(--bg2)"/>
+  </svg>
+</div>
+
+<!-- ==========================================
+     PREREQUISITES
+     ========================================== -->
+<section style="background: var(--bg2); padding-top: 60px;">
+  <div class="wrap text-center">
+    <div class="tag"><span class="dot"></span> Before You Start</div>
+    <h2 class="section-title">What You Need</h2>
+    <p class="section-sub">Make sure you have these ready before diving in.</p>
+
+    <div class="prereq-grid fade-in">
+      <div class="prereq-card">
+        <i class="ph-duotone ph-desktop"></i>
+        <h3>A Computer</h3>
+        <p>Mac, Windows, or Linux &mdash; all work great.</p>
+      </div>
+      <div class="prereq-card">
+        <i class="ph-duotone ph-wifi-high"></i>
+        <h3>Internet</h3>
+        <p>You'll need a connection to download packages and authenticate.</p>
+      </div>
+      <div class="prereq-card">
+        <i class="ph-duotone ph-terminal-window"></i>
+        <h3>Node.js 22+</h3>
+        <p>Node 24 recommended. <a href="https://nodejs.org" style="color:var(--accent);font-weight:600;" target="_blank">Download here</a></p>
+      </div>
+      <div class="prereq-card">
+        <i class="ph-duotone ph-key"></i>
+        <h3>AI Provider</h3>
+        <p>An account with Anthropic Claude or OpenAI. Set up in Step 1.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOUD DIVIDER FLIP -->
+<div class="cloud-divider flip">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path d="M0,60 C360,120 720,0 1080,80 C1260,100 1380,40 1440,60 L1440,120 L0,120Z" fill="var(--bg2)"/>
+  </svg>
+</div>
+
+<!-- ==========================================
+     STEP 1: AI PROVIDER
+     ========================================== -->
+<section class="step-section" id="step-1">
+  <div class="wrap">
+    <div class="step-header fade-in">
+      <div class="step-number">1</div>
+      <h2>Set Up Your AI Provider</h2>
+    </div>
+    <div class="step-body fade-in">
+      <p>Eva-01 works with <strong>Anthropic Claude</strong> (default) or <strong>OpenAI</strong>. You need credentials from at least one. Pick your method:</p>
+
+      <div class="option-tabs">
+        <button class="option-tab active" onclick="switchOption('apikey')">API Key (Recommended)</button>
+        <button class="option-tab" onclick="switchOption('oauth')">OAuth / Subscription</button>
+      </div>
+
+      <!-- API KEY OPTION -->
+      <div class="option-content active" id="opt-apikey">
+        <p>An API key gives you pay-as-you-go access. This is the safest and most reliable method.</p>
+
+        <div class="provider-tabs">
+          <button class="provider-tab active" onclick="switchProvider('apikey', 'claude')">Claude (Anthropic)</button>
+          <button class="provider-tab" onclick="switchProvider('apikey', 'openai')">OpenAI</button>
+        </div>
+
+        <div class="provider-content active" id="apikey-claude">
+          <ol class="inst-list">
+            <li><span class="inst-num">1</span> Go to <a href="https://platform.claude.com" style="color:var(--accent);font-weight:600;" target="_blank">platform.claude.com</a> and create an account (or sign in)</li>
+            <li><span class="inst-num">2</span> Set up billing (pay-as-you-go, $5&ndash;$25 cap recommended while testing)</li>
+            <li><span class="inst-num">3</span> Go to <strong>Settings &rarr; API Keys</strong> and click <strong>Create Key</strong></li>
+            <li><span class="inst-num">4</span> Name it something like <code style="background:rgba(45,31,38,0.08);padding:2px 8px;border-radius:4px;font-family:'SF Mono',monospace;font-size:13px;">eva-01</code> and copy the key immediately &mdash; you won't see it again</li>
+          </ol>
+        </div>
+
+        <div class="provider-content" id="apikey-openai">
+          <ol class="inst-list">
+            <li><span class="inst-num">1</span> Go to <a href="https://platform.openai.com" style="color:var(--accent);font-weight:600;" target="_blank">platform.openai.com</a> and create an account (or sign in) &mdash; this is separate from your ChatGPT account</li>
+            <li><span class="inst-num">2</span> Set up billing under <strong>Settings &rarr; Billing</strong></li>
+            <li><span class="inst-num">3</span> Go to <strong>API Keys</strong> and click <strong>Create new secret key</strong></li>
+            <li><span class="inst-num">4</span> Name it and copy it immediately &mdash; you won't see it again</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- OAUTH OPTION -->
+      <div class="option-content" id="opt-oauth">
+        <p>Already paying for a Claude or OpenAI subscription? You can use that instead of separate API access.</p>
+
+        <div class="provider-tabs">
+          <button class="provider-tab active" onclick="switchProvider('oauth', 'openai-oauth')">OpenAI (ChatGPT Plus/Pro)</button>
+          <button class="provider-tab" onclick="switchProvider('oauth', 'claude-oauth')">Claude (Pro/Max)</button>
+        </div>
+
+        <div class="provider-content active" id="oauth-openai-oauth">
+          <p>OpenAI's OAuth flow is built into the OpenClaw setup wizard. When you run <code style="background:rgba(45,31,38,0.08);padding:2px 8px;border-radius:4px;font-family:'SF Mono',monospace;font-size:13px;">openclaw onboard</code> in Step 2, select the browser-based login option. It opens your browser, you sign in with your ChatGPT account, and you're done.</p>
+        </div>
+
+        <div class="provider-content" id="oauth-claude-oauth">
+          <p>Claude requires an extra step &mdash; you need to generate a setup-token using the Claude Code CLI:</p>
+          <ol class="inst-list">
+            <li><span class="inst-num">1</span> Install Claude Code if you haven't already:</li>
+          </ol>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <code>npm install -g @anthropic-ai/claude-code</code>
+          </div>
+          <ol class="inst-list" start="2">
+            <li><span class="inst-num">2</span> Run the token generator: <code style="background:rgba(45,31,38,0.08);padding:2px 8px;border-radius:4px;font-family:'SF Mono',monospace;font-size:13px;">claude setup-token</code></li>
+            <li><span class="inst-num">3</span> A browser window opens &mdash; sign in and authorize</li>
+            <li><span class="inst-num">4</span> The token appears in your terminal (starts with <code style="background:rgba(45,31,38,0.08);padding:2px 8px;border-radius:4px;font-family:'SF Mono',monospace;font-size:13px;">sk-ant-oat01-</code>). Copy it.</li>
+            <li><span class="inst-num">5</span> Paste this token when running <code style="background:rgba(45,31,38,0.08);padding:2px 8px;border-radius:4px;font-family:'SF Mono',monospace;font-size:13px;">openclaw onboard</code> in Step 2</li>
+          </ol>
+
+          <div class="warning-box">
+            <strong>&#9888;&#65039; ToS Risk Warning:</strong> In February 2026, Anthropic updated its terms to ban third-party tools from using subscription OAuth tokens. The <code style="font-family:'SF Mono',monospace;font-size:13px;">claude setup-token</code> flow still works technically, but using it with OpenClaw (a third-party tool) may violate Anthropic's Terms of Service. Your account could be restricted or banned. If you're not comfortable with this risk, use an API key instead.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     STEP 2: INSTALL OPENCLAW
+     ========================================== -->
+<section class="step-section" id="step-2">
+  <div class="wrap">
+    <div class="step-header fade-in">
+      <div class="step-number">2</div>
+      <h2>Install OpenClaw</h2>
+    </div>
+    <div class="step-body fade-in">
+      <p>Open your Terminal (Mac/Linux) or PowerShell (Windows) and run:</p>
+
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <code>npm install -g openclaw@2026.3.24</code>
+      </div>
+
+      <div class="info-box">
+        <strong>Why a specific version?</strong> Eva-01 v4.3 is tested against OpenClaw v2026.3.24. Using <code style="font-family:'SF Mono',monospace;font-size:13px;">@latest</code> may pull a newer version with breaking changes. You can update later once you've verified compatibility.
+      </div>
+
+      <p>Then run the setup wizard:</p>
+
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <code>openclaw onboard --install-daemon</code>
+      </div>
+
+      <p>The wizard walks you through everything: connecting your AI provider, connecting a chat channel (Telegram, Discord, WhatsApp, etc.), and starting the background daemon. Follow the prompts.</p>
+
+      <div class="tip-box">
+        <strong>Note your workspace path.</strong> When the wizard asks about your workspace, note the path it gives you. By default this is <code style="font-family:'SF Mono',monospace;font-size:13px;">~/.openclaw/workspace/</code>. You'll need it for the next step.
+      </div>
+
+      <p style="margin-top:24px;"><strong>Configure the heartbeat interval</strong> (recommended). OpenClaw defaults to 30 minutes, which is frequent. For Eva-01, start with 2 hours:</p>
+
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <code>openclaw config set heartbeat.interval "2h"</code>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     STEP 3: INSTALL THE BLUEPRINT
+     ========================================== -->
+<section class="step-section" id="step-3">
+  <div class="wrap">
+    <div class="step-header fade-in">
+      <div class="step-number">3</div>
+      <h2>Install the Blueprint</h2>
+    </div>
+    <div class="step-body fade-in">
+      <p>Copy all the files from this blueprint folder into your OpenClaw workspace folder:</p>
+
+      <div class="os-tabs">
+        <button class="os-tab active" onclick="switchOS('mac')">Mac / Linux</button>
+        <button class="os-tab" onclick="switchOS('win')">Windows</button>
+      </div>
+
+      <div class="os-content active" id="os-mac">
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <code>cp -r ./v4.3/* ~/.openclaw/workspace/</code>
+        </div>
+      </div>
+
+      <div class="os-content" id="os-win">
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <code>Copy-Item -Path .\v4.3\* -Destination ~\.openclaw\workspace\ -Recurse</code>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <strong>Different workspace path?</strong> If your workspace is in a different location (the onboard wizard told you where), use that path instead.
+      </div>
+
+      <div class="info-box">
+        <strong>Container mode:</strong> If running <code style="font-family:'SF Mono',monospace;font-size:13px;">openclaw --container</code>, copy files to the mounted workspace path instead.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     STEP 4: CONFIGURE
+     ========================================== -->
+<section class="step-section" id="step-4">
+  <div class="wrap">
+    <div class="step-header fade-in">
+      <div class="step-number">4</div>
+      <h2>Configure for Eva-01</h2>
+    </div>
+    <div class="step-body fade-in">
+      <p>Eva-01 ships with <code style="background:rgba(45,31,38,0.08);padding:2px 8px;border-radius:4px;font-family:'SF Mono',monospace;font-size:13px;">openclaw.json</code> &mdash; a configuration file with recommended settings. When you copied the blueprint files, this was included automatically.</p>
+
+      <div class="warning-box">
+        <strong>Already have an openclaw.json?</strong> Back up your existing config first:
+        <div class="code-block" style="margin-top:12px;margin-bottom:0;">
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <code>cp ~/.openclaw/openclaw.json ~/.openclaw/openclaw.json.backup</code>
+        </div>
+        <p style="margin-top:12px;">Compare the shipped config against yours. Merge what makes sense &mdash; don't blindly replace, as your existing config has auth, channel, and plugin settings you'll lose.</p>
+      </div>
+
+      <p><strong>Using OpenAI instead of Claude?</strong> Change the model in <code style="background:rgba(45,31,38,0.08);padding:2px 8px;border-radius:4px;font-family:'SF Mono',monospace;font-size:13px;">openclaw.json</code>:</p>
+
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <code><span class="string">"primary"</span>: <span class="string">"openai/gpt-4o"</span></code>
+      </div>
+
+      <p><strong>At minimum, verify these settings:</strong></p>
+      <ol class="inst-list">
+        <li><span class="inst-num"><i class="ph-duotone ph-check" style="font-size:14px;"></i></span> Your AI provider credentials are configured (API key or token from Step 1)</li>
+        <li><span class="inst-num"><i class="ph-duotone ph-check" style="font-size:14px;"></i></span> <code style="background:rgba(45,31,38,0.08);padding:2px 8px;border-radius:4px;font-family:'SF Mono',monospace;font-size:13px;">heartbeat.every</code> is set to <code style="background:rgba(45,31,38,0.08);padding:2px 8px;border-radius:4px;font-family:'SF Mono',monospace;font-size:13px;">"2h"</code> (not the default <code style="background:rgba(45,31,38,0.08);padding:2px 8px;border-radius:4px;font-family:'SF Mono',monospace;font-size:13px;">"30m"</code>)</li>
+      </ol>
+
+      <div class="info-box">
+        <strong>Auto-injection:</strong> Some OpenClaw versions support <code style="font-family:'SF Mono',monospace;font-size:13px;">boot-md</code> and <code style="font-family:'SF Mono',monospace;font-size:13px;">bootstrap-extra-files</code> config keys. If your version supports them, add <code style="font-family:'SF Mono',monospace;font-size:13px;">"boot-md": "SOUL.md"</code>. If not &mdash; skip it. Eva-01 will detect this and load files manually. Both modes work.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     STEP 5: YOUR PROFILE
+     ========================================== -->
+<section class="step-section" id="step-5">
+  <div class="wrap">
+    <div class="step-header fade-in">
+      <div class="step-number">5</div>
+      <h2>Fill Out Your Profile</h2>
+    </div>
+    <div class="step-body fade-in">
+      <p>Open these two files in any text editor and fill them out:</p>
+
+      <div class="file-grid">
+        <div class="file-card">
+          <h4><i class="ph-duotone ph-user-circle"></i> USER.md</h4>
+          <p>Everything about you. The more detail you provide, the better Eva-01 knows you. At minimum: your name, role, and communication preferences.</p>
+        </div>
+        <div class="file-card">
+          <h4><i class="ph-duotone ph-heart"></i> SOUL.md</h4>
+          <p>Eva-01's personality. The defaults are solid (including the Handling Manual), but customize anything that doesn't match your style.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     STEP 6: START TALKING
+     ========================================== -->
+<section class="step-section" id="step-6">
+  <div class="wrap">
+    <div class="step-header fade-in">
+      <div class="step-number">6</div>
+      <h2>Start Talking</h2>
+    </div>
+    <div class="step-body fade-in">
+      <p>Open your chat channel (Telegram, Discord, whatever you connected during onboard) and send Eva-01 a message. Say hello.</p>
+
+      <p>On first contact, Eva-01 reads BOOTSTRAP.md and sets herself up automatically:</p>
+
+      <div class="expect-grid" style="grid-template-columns: repeat(2, 1fr); margin-top: 24px;">
+        <div class="expect-card">
+          <i class="ph-duotone ph-magnifying-glass"></i>
+          <h3>Environment Check</h3>
+          <p>Checks git availability, workspace permissions, and learns your name from USER.md.</p>
+        </div>
+        <div class="expect-card">
+          <i class="ph-duotone ph-shield-check"></i>
+          <h3>Security Setup</h3>
+          <p>Personalizes security directives and verifies replacements worked correctly.</p>
+        </div>
+        <div class="expect-card">
+          <i class="ph-duotone ph-git-branch"></i>
+          <h3>Version Control</h3>
+          <p>Initializes git for your workspace, creates her first daily log.</p>
+        </div>
+        <div class="expect-card">
+          <i class="ph-duotone ph-hand-waving"></i>
+          <h3>Introduction</h3>
+          <p>Sets up weekly memory review, creates private notes, and introduces herself.</p>
+        </div>
+      </div>
+
+      <div class="tip-box" style="margin-top: 32px;">
+        <strong>After that, Eva-01 is fully operational.</strong> She renames BOOTSTRAP.md to BOOTSTRAP.md.completed (preserved for reference).
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOUD DIVIDER -->
+<div class="cloud-divider">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path d="M0,60 C360,120 720,0 1080,80 C1260,100 1380,40 1440,60 L1440,120 L0,120Z" fill="var(--bg2)"/>
+  </svg>
+</div>
+
+<!-- ==========================================
+     WHAT TO EXPECT
+     ========================================== -->
+<section style="background: var(--bg2);" id="expect">
+  <div class="wrap text-center">
+    <div class="tag"><span class="dot"></span> What to Expect</div>
+    <h2 class="section-title">She Gets Smarter Over Time</h2>
+    <p class="section-sub">Eva-01's core files are auto-loaded every session. The more you talk to her, the more she learns.</p>
+
+    <div class="expect-grid fade-in">
+      <div class="expect-card">
+        <i class="ph-duotone ph-brain"></i>
+        <h3>General Memory</h3>
+        <p>Observations written to MEMORY.md, visible across all sessions.</p>
+      </div>
+      <div class="expect-card">
+        <i class="ph-duotone ph-lock-simple"></i>
+        <h3>Private Notes</h3>
+        <p>Sensitive observations in memory/private-notes.md, private to direct chats.</p>
+      </div>
+      <div class="expect-card">
+        <i class="ph-duotone ph-notebook"></i>
+        <h3>Daily Logs</h3>
+        <p>Raw conversation logs stored to daily files for long-term context.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOUD DIVIDER FLIP -->
+<div class="cloud-divider flip">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path d="M0,60 C360,120 720,0 1080,80 C1260,100 1380,40 1440,60 L1440,120 L0,120Z" fill="var(--bg2)"/>
+  </svg>
+</div>
+
+<!-- ==========================================
+     CUSTOMIZE
+     ========================================== -->
+<section id="customize">
+  <div class="wrap">
+    <div class="text-center" style="margin-bottom: 48px;">
+      <div class="tag"><span class="dot"></span> Make It Yours</div>
+      <h2 class="section-title">Customize Eva-01</h2>
+      <p class="section-sub">Tweak these files anytime to shape your experience.</p>
+    </div>
+
+    <div class="expect-grid fade-in" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="expect-card">
+        <i class="ph-duotone ph-heart"></i>
+        <h3>SOUL.md</h3>
+        <p>Change her personality and voice to match your communication style.</p>
+      </div>
+      <div class="expect-card">
+        <i class="ph-duotone ph-user"></i>
+        <h3>USER.md</h3>
+        <p>Update your profile as your role, goals, or preferences change.</p>
+      </div>
+      <div class="expect-card">
+        <i class="ph-duotone ph-target"></i>
+        <h3>CURRENT-PRIORITIES.md</h3>
+        <p>Edit weekly to keep Eva-01 focused on what matters right now.</p>
+      </div>
+      <div class="expect-card">
+        <i class="ph-duotone ph-plugs-connected"></i>
+        <h3>INTEGRATIONS.md</h3>
+        <p>Set up external tools and MCP bridges to expand her capabilities.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOUD DIVIDER -->
+<div class="cloud-divider">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path d="M0,60 C360,120 720,0 1080,80 C1260,100 1380,40 1440,60 L1440,120 L0,120Z" fill="var(--bg2)"/>
+  </svg>
+</div>
+
+<!-- ==========================================
+     TROUBLESHOOTING
+     ========================================== -->
+<section style="background: var(--bg2);" id="troubleshooting">
+  <div class="wrap">
+    <div class="text-center" style="margin-bottom: 16px;">
+      <div class="tag"><span class="dot"></span> Troubleshooting</div>
+      <h2 class="section-title">Common Issues</h2>
+      <p class="section-sub">Quick fixes for the most frequent hiccups.</p>
+    </div>
+
+    <div class="accordion fade-in">
+      <div class="accordion-item">
+        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+          <i class="ph-duotone ph-question"></i>
+          Agent doesn't seem to know who it is?
+          <i class="ph-bold ph-caret-down accordion-chevron"></i>
+        </button>
+        <div class="accordion-answer">
+          <div class="accordion-answer-inner">
+            Check your <code>openclaw.json</code> and make sure your model and heartbeat settings are correct. Eva-01 detects whether auto-injection is active and loads files manually if needed &mdash; the config doesn't have to be perfect.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+          <i class="ph-duotone ph-question"></i>
+          Agent didn't run BOOTSTRAP.md?
+          <i class="ph-bold ph-caret-down accordion-chevron"></i>
+        </button>
+        <div class="accordion-answer">
+          <div class="accordion-answer-inner">
+            Send this message: <code>"Read BOOTSTRAP.md in your workspace and follow the instructions."</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+          <i class="ph-duotone ph-question"></i>
+          AGENTS.md still has {{OWNER_LEGAL_NAME}} placeholders?
+          <i class="ph-bold ph-caret-down accordion-chevron"></i>
+        </button>
+        <div class="accordion-answer">
+          <div class="accordion-answer-inner">
+            Bootstrap may have failed partially. Tell your agent: <code>"Check the Constitutional Directives in AGENTS.md. Replace every {{OWNER_LEGAL_NAME}} with my actual name: [your name]."</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+          <i class="ph-duotone ph-question"></i>
+          Files not auto-loading?
+          <i class="ph-bold ph-caret-down accordion-chevron"></i>
+        </button>
+        <div class="accordion-answer">
+          <div class="accordion-answer-inner">
+            Eva-01 loads core files (SOUL.md, USER.md, MEMORY.md, etc.) either via auto-injection or manually at session start. If she seems to have no context, try sending: <code>"Read SOUL.md and USER.md, then greet me."</code>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+          <i class="ph-duotone ph-question"></i>
+          Authentication errors?
+          <i class="ph-bold ph-caret-down accordion-chevron"></i>
+        </button>
+        <div class="accordion-answer">
+          <div class="accordion-answer-inner">
+            <strong>API key:</strong> Verify it's correctly set in <code>openclaw.json</code> or your environment. Check that billing is active on your provider account.<br><br>
+            <strong>Claude setup-token:</strong> Your token may have expired. Run <code>claude setup-token</code> again to generate a new one.<br><br>
+            <strong>OpenAI OAuth:</strong> Try <code>openclaw logout</code> then <code>openclaw onboard</code> to re-authenticate.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-trigger" onclick="toggleAccordion(this)">
+          <i class="ph-duotone ph-question"></i>
+          Need to start over?
+          <i class="ph-bold ph-caret-down accordion-chevron"></i>
+        </button>
+        <div class="accordion-answer">
+          <div class="accordion-answer-inner">
+            If BOOTSTRAP.md.completed exists, rename it back to BOOTSTRAP.md and tell the agent to re-run setup. Your workspace has git version control (if git was available), so you can also <code>git log</code> to see checkpoints and restore any previous state.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOUD DIVIDER FLIP -->
+<div class="cloud-divider flip">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+    <path d="M0,60 C360,120 720,0 1080,80 C1260,100 1380,40 1440,60 L1440,120 L0,120Z" fill="var(--bg2)"/>
+  </svg>
+</div>
+
+<!-- ==========================================
+     CTA
+     ========================================== -->
+<section style="padding: 80px 0;">
+  <div class="wrap text-center">
+    <i class="ph-duotone ph-lifebuoy" style="font-size: 48px; color: var(--accent); display: block; margin-bottom: 20px;"></i>
+    <h2 class="section-title">Need More Help?</h2>
+    <p class="section-sub" style="margin-bottom: 32px;">Visit evaonline.xyz for guides, advanced plugins, and support.</p>
+    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+      <a href="https://evaonline.xyz" class="btn btn-eva btn-lg" target="_blank">Visit Eva Online</a>
+      <a href="index.html#questionnaire" class="btn btn-ghost btn-lg">Build Your Eva-01</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="logo" style="justify-content: center; margin-bottom: 12px;"><img src="images/logo.svg" alt="Eva Online" style="width:28px;height:auto;"> EVA ONLINE</div>
+    <p>&copy; 2025 Eva Online. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ============================================
+     JAVASCRIPT
+     ============================================ -->
+<script>
+// Option tabs (API Key vs OAuth)
+function switchOption(id) {
+  document.querySelectorAll('.option-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.option-content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('opt-' + id).classList.add('active');
+}
+
+// Provider tabs (Claude vs OpenAI)
+function switchProvider(group, id) {
+  const parent = event.target.closest('.option-content');
+  parent.querySelectorAll('.provider-tab').forEach(t => t.classList.remove('active'));
+  parent.querySelectorAll('.provider-content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(group + '-' + id).classList.add('active');
+}
+
+// OS tabs (Mac vs Windows)
+function switchOS(id) {
+  document.querySelectorAll('.os-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.os-content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('os-' + id).classList.add('active');
+}
+
+// Copy code
+function copyCode(btn) {
+  const code = btn.parentElement.querySelector('code').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+  });
+}
+
+// Accordion
+function toggleAccordion(trigger) {
+  const item = trigger.parentElement;
+  const wasOpen = item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+  // Open clicked (if it wasn't already open)
+  if (!wasOpen) item.classList.add('open');
+}
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
